@@ -1,0 +1,110 @@
+<?php require_once "./components/Base/Head.php" ?>
+<?php
+// Pagination
+require_once "./mvc/views/pagination.php";
+$pagination = new Pagination;
+$url = $_SERVER["REQUEST_URI"];
+$perPage = isset($_GET['perPage']) ? $_GET['perPage'] : 9;
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+// Sort
+$productsSort = $data["products"];
+$sort = isset($_GET['sort']) ? $_GET['sort'] : "new";
+if ($sort == "name") $productsSort = $data["products-name"];
+if ($sort == "price") $productsSort = $data["products-price"];
+
+$products = $pagination->arrSlice($productsSort, $page, $perPage);
+?>
+
+<body class="js">
+
+    <?php
+    //include_once "./components/Common/PreLoader.php";
+    include_once "./components/Header/Header.php";
+    include_once "./components/Common/Breadcrumbs.php";
+    ?>
+
+    <!-- Product Style -->
+    <section class="product-area shop-sidebar shop section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-12">
+                    <div class="shop-sidebar">
+                        <!-- Single Widget -->
+                        <div class="single-widget category">
+                            <h3 class="title">Categories</h3>
+                            <ul class="categor-list">
+                                <?php foreach ($data["prototypes"] as $prototype) : ?>
+                                    <li><a href="#"><?php echo $prototype["type_name"] ?></a></li>
+                                <?php endforeach ?>
+                            </ul>
+                        </div>
+                        <!--/ End Single Widget -->
+                        <!-- Single Widget -->
+                        <div class="single-widget category">
+                            <h3 class="title">Manufacturers</h3>
+                            <ul class="categor-list">
+                                <?php foreach ($data["manufactures"] as $manufacture) : ?>
+                                    <li><a href="#"><?php echo $manufacture["manu_name"] ?></a></li>
+                                <?php endforeach ?>
+                            </ul>
+                        </div>
+                        <!--/ End Single Widget -->
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8 col-12">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Shop Top -->
+                            <div class="shop-top">
+                                <form class="shop-shorter d-flex align-items-center">
+                                    <div class="single-shorter">
+                                        <label>Hiển thị :</label>
+                                        <select name="perPage">
+                                            <?php for ($i = 3; $i < 15; $i += 3) : ?>
+                                                <option <?php echo $perPage == $i ? "selected" : "" ?> value="<?php echo $i ?>">
+                                                    <?php echo $i < 10 ? '0' . $i : $i ?>
+                                                </option>
+                                            <?php endfor ?>
+                                        </select>
+                                    </div>
+                                    <div class="single-shorter">
+                                        <label>Sắp Xếp :</label>
+                                        <select name="sort">
+                                            <option <?php echo $sort == "new" ? "selected" : "" ?> value="new">Mới Nhất</option>
+                                            <option <?php echo $sort == "name" ? "selected" : "" ?> value="name">Tên</option>
+                                            <option <?php echo $sort == "price" ? "selected" : "" ?> value="price">Giá</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary py-2 px-3 border-0">Lọc</button>
+                                </form>
+                                <ul class="view-mode">
+                                    <li class="active"><a href="shop-grid.html"><i class="fa fa-th-large"></i></a></li>
+                                    <!-- <li><a href="shop-list.html"><i class="fa fa-th-list"></i></a></li> -->
+                                </ul>
+                            </div>
+                            <!--/ End Shop Top -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <?php foreach ($products as $product) : ?>
+                            <div class="col-lg-4 col-md-6 col-12">
+                                <?php include "./components/Products/ProductItem.php"; ?>
+                            </div>
+                        <?php endforeach ?>
+                    </div>
+                    <div class="row">
+                        <div class="w-100 d-flex justify-content-center mt-5">
+                            <?php echo $pagination->paginate($url, count($data["products"]), $perPage, $page) ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/ End Product Style 1  -->
+
+    <?php require_once "./components/Base/Footer.php" ?>
+</body>
+
+</html>
