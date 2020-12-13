@@ -1,6 +1,6 @@
 <div class="single-product">
     <div class="product-img">
-        <a href="product-details.html">
+        <a href="./products/details/<?php echo $product['id'] ?>">
             <img class="default-img" src="./public/images/products/<?php echo $product['pro_image'] ?>" alt="#">
             <img class="hover-img" src="./public/images/products/<?php echo $product['pro_image'] ?>" alt="#">
             <!-- <span class="out-of-stock">Hot</span> -->
@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="product-content">
-        <h3><a href="product-details.html"><?php echo $product['name'] ?></a></h3>
+        <h3><a href="./products/details/<?php echo $product['id'] ?>"><?php echo $product['name'] ?></a></h3>
         <div class="product-price">
             <span><?php echo number_format($product['price']) ?> VND</span>
         </div>

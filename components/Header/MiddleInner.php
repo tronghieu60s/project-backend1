@@ -1,3 +1,10 @@
+<?php
+$prototypeModel = $this->model("PrototypeModel");
+$prototypes = $prototypeModel->getPrototypes();
+$search = "";
+if (isset($_GET['q'])) $search = $_GET['q'];
+?>
+
 <!-- Middle Inner -->
 <div class="middle-inner">
     <div class="container">
@@ -26,14 +33,8 @@
             <div class="col-lg-8 col-md-7 col-12">
                 <div class="search-bar-top">
                     <div class="search-bar">
-                        <select>
-                            <option selected="selected">All Category</option>
-                            <option>watch</option>
-                            <option>mobile</option>
-                            <option>kid’s item</option>
-                        </select>
-                        <form>
-                            <input name="search" placeholder="Search Products Here....." type="search">
+                        <form action="./products" class="d-flex">
+                            <input name="q" placeholder="Tìm kiếm sản phẩm ở đây....." type="search" value="<?php echo $search  ?>">
                             <button class="btnn"><i class="ti-search"></i></button>
                         </form>
                     </div>

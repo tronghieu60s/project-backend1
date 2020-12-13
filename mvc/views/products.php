@@ -1,19 +1,28 @@
-<?php require_once "./components/Base/Head.php" ?>
+<?php
+require_once "./components/Base/Head.php";
+$productModel = new ProductModel;
+?>
+
 <?php
 // Pagination
 require_once "./mvc/views/pagination.php";
 $pagination = new Pagination;
 $url = $_SERVER["REQUEST_URI"];
 $perPage = isset($_GET['perPage']) ? $_GET['perPage'] : 9;
-$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$page = isset($_GET['page']) ? $_GET['page'] : 1; ?>
 
+<?php
 // Sort
 $productsSort = $data["products"];
+if (isset($_GET['q']))
+    $productsSort = $productModel->getProductsWithKeyWord($_GET['q']);
+
 $sort = isset($_GET['sort']) ? $_GET['sort'] : "new";
 if ($sort == "name") $productsSort = $data["products-name"];
 if ($sort == "price") $productsSort = $data["products-price"];
 
-$products = $pagination->arrSlice($productsSort, $page, $perPage);
+$products = !is_null($productsSort) ? $pagination->arrSlice($productsSort, $page, $perPage) : null;
+$numOfProducts = is_null($productsSort) ? 0 : count($productsSort);
 ?>
 
 <body class="js">
@@ -95,15 +104,22 @@ $products = $pagination->arrSlice($productsSort, $page, $perPage);
                         </div>
                     </div>
                     <div class="row">
-                        <?php foreach ($products as $product) : ?>
-                            <div class="col-lg-4 col-md-6 col-12">
-                                <?php include "./components/Products/ProductItem.php"; ?>
+                        <?php if ($numOfProducts > 0) {
+                            foreach ($products as $product) : ?>
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <?php include "./components/Products/ProductItem.php"; ?>
+                                </div>
+                            <?php endforeach;
+                        } else { ?>
+                            <div class="text-center my-5" style="width: 100%;">
+                                <h2>Không có sản phẩm nào.</h2>
                             </div>
-                        <?php endforeach ?>
+                        <?php } ?>
                     </div>
                     <div class="row">
                         <div class="w-100 d-flex justify-content-center mt-5">
-                            <?php echo $pagination->paginate($url, count($data["products"]), $perPage, $page) ?>
+                            
+                            <?php echo $pagination->paginate($url, $numOfProducts, $perPage, $page) ?>
                         </div>
                     </div>
                 </div>

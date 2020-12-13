@@ -76,4 +76,49 @@ class Products extends Controller
             "manufactures" => $manufactures
         ]);
     }
+
+    function Details($id = null)
+    {
+        if (is_null($id) || !is_numeric($id)) return $this->view("page404");
+
+        $productModel = $this->model("ProductModel");
+        $prototypeModel = $this->model("PrototypeModel");
+        $manufactureModel = $this->model("ManufactureModel");
+
+        $product = $productModel->getProductsWithId($id);
+        if (is_null($product)) return $this->view("page404");
+        
+        $productsRelate = $productModel->getProductsWithPrototypes($product->type_id);
+        $prototypes = $prototypeModel->getPrototypes();
+        $manufactures = $manufactureModel->getManufactures();
+        
+        $this->view("products-details", [
+            "product" => $product,
+            "products-relate" => $productsRelate,
+            "prototypes" => $prototypes,
+            "manufactures" => $manufactures
+        ]);
+    }
+
+    function Search()
+    {
+        $productModel = $this->model("ProductModel");
+        $prototypeModel = $this->model("PrototypeModel");
+        $manufactureModel = $this->model("ManufactureModel");
+
+        $products = $productModel->getProducts();
+        $productsSortPrice = $productModel->getProductsSort("price");
+        $productsSortName = $productModel->getProductsSort("name");
+
+        $prototypes = $prototypeModel->getPrototypes();
+        $manufactures = $manufactureModel->getManufactures();
+        
+        $this->view("products", [
+            "products" => $products,
+            "products-price" => $productsSortPrice,
+            "products-name" => $productsSortName,
+            "prototypes" => $prototypes,
+            "manufactures" => $manufactures
+        ]);
+    }
 }

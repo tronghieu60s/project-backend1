@@ -12,7 +12,32 @@ class ProductModel extends Db
         return $items;
     }
 
-    public function getProductsSort($order){
+    public function getProductsWithId($id)
+    {
+        $sql = self::$connection->prepare("SELECT * FROM `products` 
+        LEFT JOIN `manufactures` ON `manufactures`.`manu_id` = `products`.`manu_id` 
+        LEFT JOIN `prototypes` ON `prototypes`.`type_id` = `products`.`type_id` 
+        WHERE `products`.`id` = ?");
+        $sql->bind_param("i", $id);
+        $sql->execute();
+        $result = $sql->get_result()->fetch_object();
+        return $result;
+    }
+
+    public function getProductsWithKeyWord($description)
+    {
+        $sql = self::$connection->prepare("SELECT * FROM `products` 
+        LEFT JOIN `prototypes` ON `prototypes`.`type_id` = `products`.`type_id` 
+        LEFT JOIN `manufactures` ON `manufactures`.`manu_id` = `products`.`manu_id` 
+        WHERE `products`.`description` like '%$description%' 
+        OR `products`.`name` like '%$description%'");
+        $sql->execute();
+        $result = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $result;
+    }
+
+    public function getProductsSort($order)
+    {
         $sql = self::$connection->prepare("SELECT * FROM `products` 
         ORDER BY $order ASC");
         $sql->execute();
@@ -70,5 +95,4 @@ class ProductModel extends Db
         $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
         return $items;
     }
-
 }
