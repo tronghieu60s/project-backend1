@@ -21,31 +21,39 @@ $products = $pagination->arrSlice($productsSort, $page, $perPage);
     <?php
     //include_once "./components/Common/PreLoader.php";
     include_once "./components/Header/Header.php";
+
+    $name_breadcrumb = "Products";
     include_once "./components/Common/Breadcrumbs.php";
     ?>
 
     <!-- Product Style -->
-    <section class="product-area shop-sidebar shop section">
+    <section class="product-area shop-sidebar shop section pt-5">
         <div class="container">
             <div class="row">
+                <div class="col-12 text-center mb-4">
+                    <h2><?php if (isset($data["prototype"])) echo $data["prototype"]->type_name ?>
+                        <?php if (isset($data["manufacture"])) echo $data["manufacture"]->manu_name ?></h2>
+                </div>
                 <div class="col-lg-3 col-md-4 col-12">
                     <div class="shop-sidebar">
                         <!-- Single Widget -->
                         <div class="single-widget category">
-                            <h3 class="title">Categories</h3>
+                            <h3 class="title">Loại</h3>
                             <ul class="categor-list">
                                 <?php foreach ($data["prototypes"] as $prototype) : ?>
-                                    <li><a href="#"><?php echo $prototype["type_name"] ?></a></li>
+                                    <li><a href="./products/categories/<?php echo $prototype["type_id"] ?>">
+                                            <?php echo $prototype["type_name"] ?></a></li>
                                 <?php endforeach ?>
                             </ul>
                         </div>
                         <!--/ End Single Widget -->
                         <!-- Single Widget -->
                         <div class="single-widget category">
-                            <h3 class="title">Manufacturers</h3>
+                            <h3 class="title">Nhà Sản Xuất</h3>
                             <ul class="categor-list">
                                 <?php foreach ($data["manufactures"] as $manufacture) : ?>
-                                    <li><a href="#"><?php echo $manufacture["manu_name"] ?></a></li>
+                                    <li><a href="./products/manufactures/<?php echo $manufacture["manu_id"] ?>">
+                                            <?php echo $manufacture["manu_name"] ?></a></li>
                                 <?php endforeach ?>
                             </ul>
                         </div>

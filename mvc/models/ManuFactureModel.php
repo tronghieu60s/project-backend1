@@ -1,14 +1,24 @@
 <?php
 
-class ManuFactureModel extends Db
+class ManufactureModel extends Db
 {
 
-    public function getManuFactures()
+    public function getManufactures()
     {
         $sql = self::$connection->prepare("SELECT * FROM `manufactures`");
         $sql->execute();
         $items = array();
         $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $items;
+    }
+
+    public function getManufacturesWithId($id)
+    {
+        $sql = self::$connection->prepare("SELECT * FROM `manufactures` WHERE `manufactures`.`manu_id` = ?");
+        $sql->bind_param("i", $id);
+        $sql->execute();
+        $items = array();
+        $items = $sql->get_result()->fetch_object();
         return $items;
     }
 }

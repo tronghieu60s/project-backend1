@@ -5,7 +5,7 @@ $url = $base_url . $relative_path;
 ?>
 
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="vi">
 
 <head>
     <base href="<?php echo $url ?>" />

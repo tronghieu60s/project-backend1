@@ -10,8 +10,8 @@
                             <div class="navbar-collapse">
                                 <div class="nav-inner">
                                     <ul class="nav main-menu menu navbar-nav">
-                                        <li class="active"><a href="#">Home</a></li>
-                                        <li><a href="#">Product</a></li>
+                                        <li class="active"><a href="./">Home</a></li>
+                                        <li><a href="./products">Product</a></li>
                                         <li><a href="#">Service</a></li>
                                         <li><a href="#">Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
                                             <ul class="dropdown">

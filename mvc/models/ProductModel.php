@@ -13,17 +13,57 @@ class ProductModel extends Db
     }
 
     public function getProductsSort($order){
-        $sql = self::$connection->prepare("SELECT * FROM `products` ORDER BY $order ASC");
-        //$sql->bind_param("s", $order);
+        $sql = self::$connection->prepare("SELECT * FROM `products` 
+        ORDER BY $order ASC");
         $sql->execute();
         $items = array();
         $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
         return $items;
     }
 
+    // Get Products With Prototypes
     public function getProductsWithPrototypes($id)
     {
-        $sql = self::$connection->prepare("SELECT * FROM `products`, `prototypes` WHERE `products`.`type_id` = `prototypes`.`type_id` AND `products`.`type_id` = ?");
+        $sql = self::$connection->prepare("SELECT * FROM `products` 
+        LEFT JOIN `prototypes` ON `products`.`type_id` = `prototypes`.`type_id` 
+        WHERE `products`.`type_id` = ?");
+        $sql->bind_param("i", $id);
+        $sql->execute();
+        $items = array();
+        $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $items;
+    }
+
+    public function getProductsWithPrototypesSort($id, $order)
+    {
+        $sql = self::$connection->prepare("SELECT * FROM `products` 
+        LEFT JOIN `prototypes` ON `products`.`type_id` = `prototypes`.`type_id` 
+        WHERE `products`.`type_id` = ? ORDER BY $order ASC");
+        $sql->bind_param("i", $id);
+        $sql->execute();
+        $items = array();
+        $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $items;
+    }
+
+    // Get Products With ManuFacturers
+    public function getProductsWithManufactures($id)
+    {
+        $sql = self::$connection->prepare("SELECT * FROM `products` 
+        LEFT JOIN `manufactures` ON `products`.`manu_id` = `manufactures`.`manu_id` 
+        WHERE `products`.`manu_id` = ?");
+        $sql->bind_param("i", $id);
+        $sql->execute();
+        $items = array();
+        $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $items;
+    }
+
+    public function getProductsWithManufacturesSort($id, $order)
+    {
+        $sql = self::$connection->prepare("SELECT * FROM `products` 
+        LEFT JOIN `manufactures` ON `products`.`manu_id` = `manufactures`.`manu_id` 
+        WHERE `products`.`manu_id` = ? ORDER BY $order ASC");
         $sql->bind_param("i", $id);
         $sql->execute();
         $items = array();
