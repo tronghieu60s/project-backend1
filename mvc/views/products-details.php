@@ -62,7 +62,7 @@
                                         <ul>
                                             <li class="my-2"><b>Số lượng:</b>
                                                 <input class="ml-2" type="number" style="width: 100px;" value="1">
-                                                <button type="button" class="btn btn-primary border-0">Thêm vào giỏ hàng</button>
+                                                <a href="./cart?id=<?php echo $data["product"]->id ?>&action=increase"><button type="button" class="btn btn-primary border-0">Thêm vào giỏ hàng</button></a>
                                             </li>
                                             <li class="my-2"><b>Khả dụng:</b> Còn Hàng</li>
                                             <li class="my-2"><b>Nhãn hiệu:</b> <?php echo $data["product"]->manu_name ?></li>

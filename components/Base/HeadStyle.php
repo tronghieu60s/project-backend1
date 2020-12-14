@@ -28,7 +28,6 @@
 
 
 <style>
-
     input:focus {
         outline: 0 !important;
         box-shadow: none !important;
@@ -48,5 +47,9 @@
     .btn:focus {
         outline: 0;
         box-shadow: none;
+    }
+
+    .shopping-cart .qty .button.minus .btn {
+        cursor: pointer;
     }
 </style>

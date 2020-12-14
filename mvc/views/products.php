@@ -1,9 +1,6 @@
 <?php
-require_once "./components/Base/Head.php";
 $productModel = new ProductModel;
-?>
 
-<?php
 // Pagination
 require_once "./mvc/views/pagination.php";
 $pagination = new Pagination;
@@ -23,6 +20,10 @@ if ($sort == "price") $productsSort = $data["products-price"];
 
 $products = !is_null($productsSort) ? $pagination->arrSlice($productsSort, $page, $perPage) : null;
 $numOfProducts = is_null($productsSort) ? 0 : count($productsSort);
+?>
+
+<?php
+require_once "./components/Base/Head.php";
 ?>
 
 <body class="js">
