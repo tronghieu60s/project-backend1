@@ -1,5 +1,7 @@
 <?php
 $relative_path = $_SERVER['PHP_SELF'];
+$folderNow = substr($relative_path, 0, strpos($relative_path, "index.php"));
+
 $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
 $url = $base_url . $relative_path;
 ?>

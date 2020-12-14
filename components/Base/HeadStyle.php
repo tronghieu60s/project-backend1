@@ -28,6 +28,7 @@
 
 
 <style>
+
     input:focus {
         outline: 0 !important;
         box-shadow: none !important;
@@ -48,13 +49,4 @@
         outline: 0;
         box-shadow: none;
     }
-
-    .nice-select {
-        padding: 0 30px 0 10px !important;
-    }
-
-    .header.shop .nice-select::after{
-        right: 10px;
-    }
-
 </style>

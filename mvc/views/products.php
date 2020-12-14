@@ -41,7 +41,8 @@ $numOfProducts = is_null($productsSort) ? 0 : count($productsSort);
             <div class="row">
                 <div class="col-12 text-center mb-4">
                     <h2><?php if (isset($data["prototype"])) echo $data["prototype"]->type_name ?>
-                        <?php if (isset($data["manufacture"])) echo $data["manufacture"]->manu_name ?></h2>
+                        <?php if (isset($data["manufacture"])) echo $data["manufacture"]->manu_name ?>
+                        <?php if (isset($_GET['q'])) echo "Kết quả tìm kiếm cho: " . $_GET['q'] ?></h2>
                 </div>
                 <div class="col-lg-3 col-md-4 col-12">
                     <div class="shop-sidebar">
@@ -75,24 +76,29 @@ $numOfProducts = is_null($productsSort) ? 0 : count($productsSort);
                             <!-- Shop Top -->
                             <div class="shop-top">
                                 <form class="shop-shorter d-flex align-items-center">
+                                    <?php if (isset($_GET["q"])) : ?>
+                                        <input class="d-none" name="q" type="text" value="<?php echo $_GET["q"] ?>">
+                                    <?php endif ?>
                                     <div class="single-shorter">
                                         <label>Hiển thị :</label>
                                         <select name="perPage">
-                                            <?php for ($i = 3; $i < 15; $i += 3) : ?>
+                                            <?php for ($i = 3; $i <= 15; $i += 3) : ?>
                                                 <option <?php echo $perPage == $i ? "selected" : "" ?> value="<?php echo $i ?>">
                                                     <?php echo $i < 10 ? '0' . $i : $i ?>
                                                 </option>
                                             <?php endfor ?>
                                         </select>
                                     </div>
-                                    <div class="single-shorter">
-                                        <label>Sắp Xếp :</label>
-                                        <select name="sort">
-                                            <option <?php echo $sort == "new" ? "selected" : "" ?> value="new">Mới Nhất</option>
-                                            <option <?php echo $sort == "name" ? "selected" : "" ?> value="name">Tên</option>
-                                            <option <?php echo $sort == "price" ? "selected" : "" ?> value="price">Giá</option>
-                                        </select>
-                                    </div>
+                                    <?php if (!isset($_GET['q'])) : ?>
+                                        <div class="single-shorter">
+                                            <label>Sắp Xếp :</label>
+                                            <select name="sort">
+                                                <option <?php echo $sort == "new" ? "selected" : "" ?> value="new">Mới Nhất</option>
+                                                <option <?php echo $sort == "name" ? "selected" : "" ?> value="name">Tên</option>
+                                                <option <?php echo $sort == "price" ? "selected" : "" ?> value="price">Giá</option>
+                                            </select>
+                                        </div>
+                                    <?php endif ?>
                                     <button type="submit" class="btn btn-primary py-2 px-3 border-0">Lọc</button>
                                 </form>
                                 <ul class="view-mode">
@@ -118,7 +124,7 @@ $numOfProducts = is_null($productsSort) ? 0 : count($productsSort);
                     </div>
                     <div class="row">
                         <div class="w-100 d-flex justify-content-center mt-5">
-                            
+
                             <?php echo $pagination->paginate($url, $numOfProducts, $perPage, $page) ?>
                         </div>
                     </div>

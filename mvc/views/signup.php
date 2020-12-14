@@ -7,23 +7,25 @@ if (isset($_SESSION['user']))
 $status = null;
 $alert = null;
 require_once "./mvc/models/UserModel.php";
-if (isset($_POST['username']) && isset($_POST['password'])) {
+if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['repassword'])) {
     $userModel = new UserModel;
-    $user = $userModel->getUserWithUsername($_POST['username']);
-    if ($user == null) {
+    if ($_POST['password'] != $_POST['repassword']) {
         $status = "error";
-        $alert = "Tên tài khoản hoặc mật khẩu không chính xác.";
+        $alert = "Mật khẩu nhập lại không khớp.";
     } else {
-        if (!password_verify($_POST['password'], $user->password)) {
+        $user = $userModel->getUserWithUsername($_POST['username']);
+        if ($user != null) {
             $status = "error";
-            $alert = "Tên tài khoản hoặc mật khẩu không chính xác.";
-        } else {
-            $_SESSION["user"] = $_POST['username'];
-            header("location:../");
+            $alert = "Tên người dùng đã tồn tại. Vui lòng chọn tên khác";
+        }else {
+            $userModel->createUser($_POST['username'], password_hash($_POST['password'], PASSWORD_DEFAULT));
+            $status = "success";
+            $alert = "Tạo tài khoản thành công.";
         }
     }
 }
 ?>
+
 <?php require_once "./components/Base/Head.php" ?>
 
 <body class="js">
@@ -47,8 +49,12 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                             <label for="">Mật Khẩu</label>
                             <input type="password" name="password" id="" class="form-control px-2" placeholder="" aria-describedby="helpId">
                         </div>
-                        <div class="mb-3"><small>Bạn chưa có tài khoản? <a style="color: #5e72e4" href="./admin/signup">Đăng Kí</a></small></div>
-                        <button type="submit" class="btn btn-primary border-0">Đăng Nhập</button>
+                        <div class="form-group">
+                            <label for="">Nhập Lại Mật Khẩu</label>
+                            <input type="password" name="repassword" id="" class="form-control px-2" placeholder="" aria-describedby="helpId">
+                        </div>
+                        <div class="mb-3"><small>Bạn đã có tài khoản? <a style="color: #5e72e4" href="./admin/login">Đăng Nhập</a></small></div>
+                        <button type="submit" class="btn btn-primary border-0">Đăng Kí</button>
                     </form>
                 </div>
                 <div class="col"></div>

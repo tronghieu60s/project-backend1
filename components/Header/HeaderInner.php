@@ -1,3 +1,6 @@
+<?php $controller = strtok($_SERVER["REQUEST_URI"], '?');
+$link = substr($controller, strlen($folderNow), strlen($controller)); ?>
+
 <!-- Header Inner -->
 <div class="header-inner">
     <div class="container">
@@ -10,9 +13,9 @@
                             <div class="navbar-collapse">
                                 <div class="nav-inner">
                                     <ul class="nav main-menu menu navbar-nav">
-                                        <li class="active"><a href="./">Home</a></li>
-                                        <li><a href="./products">Product</a></li>
-                                        <li><a href="#">Service</a></li>
+                                        <li class="<?php echo $link == "" ? "active" : "" ?>"><a href="./">Home</a></li>
+                                        <li class="<?php echo $link == "products" ? "active" : "" ?>"><a href="./products">Product</a></li>
+                                        <li class="<?php echo $link == "service" ? "active" : "" ?>"><a href="#">Service</a></li>
                                         <li><a href="#">Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
                                             <ul class="dropdown">
                                                 <li><a href="shop-grid.html">Shop Grid</a></li>

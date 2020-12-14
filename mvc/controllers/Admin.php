@@ -14,6 +14,6 @@ class Admin extends Controller
     
     function SignUp()
     {
-        $this->view("admin");
+        $this->view("signup");
     }
 }

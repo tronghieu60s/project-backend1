@@ -20,8 +20,8 @@ if (isset($_GET['q'])) $search = $_GET['q'];
                     <div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
                     <!-- Search Form -->
                     <div class="search-top">
-                        <form class="search-form">
-                            <input type="text" placeholder="Search here..." name="search">
+                        <form class="search-form" action="./products">
+                            <input type="text" placeholder="Search here..." name="q" value="<?php echo $search ?>">
                             <button value="search" type="submit"><i class="ti-search"></i></button>
                         </form>
                     </div>
@@ -33,8 +33,8 @@ if (isset($_GET['q'])) $search = $_GET['q'];
             <div class="col-lg-8 col-md-7 col-12">
                 <div class="search-bar-top">
                     <div class="search-bar">
-                        <form action="./products" class="d-flex">
-                            <input name="q" placeholder="Tìm kiếm sản phẩm ở đây....." type="search" value="<?php echo $search  ?>">
+                        <form style="width: 100%; text-align: left;" action="./products">
+                            <input style="width: 100%; padding-right: 78px;" name="q" placeholder="Tìm kiếm sản phẩm ở đây....." type="search" value="<?php echo $search ?>">
                             <button class="btnn"><i class="ti-search"></i></button>
                         </form>
                     </div>
