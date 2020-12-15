@@ -63,6 +63,13 @@ $numOfProducts = is_null($productsSort) ? 0 : count($productsSort);
                     </div>
 
                     <div class="row">
+                        <div class="col-12 my-2">
+                            <a href="./admin/products/create">
+                                <button type="button" class="btn btn-primary">
+                                    Thêm
+                                </button>
+                            </a>
+                        </div>
                         <div class="col-12">
                             <div class="card">
                                 <table class="table table-striped table-bordered">

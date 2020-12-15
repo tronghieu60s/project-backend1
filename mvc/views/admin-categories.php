@@ -48,6 +48,11 @@ if (isset($_GET['remove']) && isset($_GET['type'])) {
 
                     <div class="row">
                         <div class="col-12 col-xl-6">
+                            <div class="col-12 my-2">
+                                <a href="./admin/categories/manufacture/create"><button type="button" class="btn btn-primary">
+                                        Thêm
+                                    </button></a>
+                            </div>
                             <div class="card">
                                 <table class="table table-striped table-bordered">
                                     <thead>
@@ -73,8 +78,15 @@ if (isset($_GET['remove']) && isset($_GET['type'])) {
                                 </table>
                             </div>
                         </div>
-
                         <div class="col-12 col-xl-6">
+                            <div class="col-12 my-2">
+                                <a href="./admin/categories/prototype/create">
+                                    <button type="button" class="btn btn-primary">
+                                        Thêm
+                                    </button>
+                                </a>
+
+                            </div>
                             <div class="card">
                                 <table class="table table-striped table-bordered">
                                     <thead>
