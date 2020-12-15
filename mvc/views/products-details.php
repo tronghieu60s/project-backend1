@@ -1,13 +1,12 @@
-<?php require_once "./components/Base/Head.php" ?>
+<?php require_once "./client/Base/Head.php" ?>
 
 <body class="js">
 
     <?php
-    //include_once "./components/Common/PreLoader.php";
-    include_once "./components/Header/Header.php";
+    include_once "./client/Header/Header.php";
 
     $name_breadcrumb = $data["product"]->name;
-    include_once "./components/Common/Breadcrumbs.php";
+    include_once "./client/Common/Breadcrumbs.php";
     ?>
 
     <!-- Start Blog Single -->
@@ -61,8 +60,12 @@
                                         <h4 class="blog-title mt-3" style="color: #F7941D;"><?php echo number_format($data["product"]->price); ?> VNĐ</h4>
                                         <ul>
                                             <li class="my-2"><b>Số lượng:</b>
-                                                <input class="ml-2" type="number" style="width: 100px;" value="1">
-                                                <a href="./cart?id=<?php echo $data["product"]->id ?>&action=increase"><button type="button" class="btn btn-primary border-0">Thêm vào giỏ hàng</button></a>
+                                                <form action="./cart">
+                                                    <input class="ml-2" type="number" name="qty" style="width: 100px;" value="1">
+                                                    <input class="d-none" type="text" name="id" value="<?php echo $data["product"]->id ?>">
+                                                    <input class="d-none" type="text" name="action" value="increase">
+                                                    <button type="submit" class="btn btn-primary border-0">Thêm vào giỏ hàng</button>
+                                                </form>
                                             </li>
                                             <li class="my-2"><b>Khả dụng:</b> Còn Hàng</li>
                                             <li class="my-2"><b>Nhãn hiệu:</b> <?php echo $data["product"]->manu_name ?></li>
@@ -138,7 +141,7 @@
                         <?php shuffle($data["products-relate"])  ?>
                         <?php foreach (array_slice($data["products-relate"], 0, 8) as $product) : ?>
                             <div class="col-lg-3 col-md-4 col-6">
-                                <?php include "./components/Products/ProductItem.php"; ?>
+                                <?php include "./client/Products/ProductItem.php"; ?>
                             </div>
                         <?php endforeach ?>
                     </div>
@@ -148,7 +151,7 @@
     </section>
     <!--/ End Blog Single -->
 
-    <?php require_once "./components/Base/Footer.php" ?>
+    <?php require_once "./client/Base/Footer.php" ?>
 </body>
 
 </html>

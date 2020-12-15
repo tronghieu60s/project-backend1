@@ -3,9 +3,19 @@
 class ProductModel extends Db
 {
 
+    public function removeProductWithId($id)
+    {
+        $sql = self::$connection->prepare("DELETE FROM `products` WHERE `products`.`id` = ?");
+        $sql->bind_param("i", $id);
+        return $sql->execute();
+    }
+
     public function getProducts()
     {
-        $sql = self::$connection->prepare("SELECT * FROM `products` ORDER BY `created_at` DESC");
+        $sql = self::$connection->prepare("SELECT * FROM `products` 
+        LEFT JOIN `manufactures` ON `manufactures`.`manu_id` = `products`.`manu_id` 
+        LEFT JOIN `prototypes` ON `prototypes`.`type_id` = `products`.`type_id` 
+        ORDER BY `created_at` DESC");
         $sql->execute();
         $items = array();
         $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);

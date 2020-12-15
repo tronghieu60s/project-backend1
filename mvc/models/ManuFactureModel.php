@@ -3,6 +3,13 @@
 class ManufactureModel extends Db
 {
 
+    public function removeManufactureWithId($id)
+    {
+        $sql = self::$connection->prepare("DELETE FROM `manufactures` WHERE `manufactures`.`manu_id` = ?");
+        $sql->bind_param("i", $id);
+        return $sql->execute();
+    }
+
     public function getManufactures()
     {
         $sql = self::$connection->prepare("SELECT * FROM `manufactures`");

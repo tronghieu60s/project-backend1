@@ -2,6 +2,21 @@
 
 class UserModel extends Db
 {
+    public function removeUserWithId($id)
+    {
+        $sql = self::$connection->prepare("DELETE FROM `users` WHERE `users`.`user_id` = ?");
+        $sql->bind_param("i", $id);
+        return $sql->execute();
+    }
+
+    public function getUsers()
+    {
+        $sql = self::$connection->prepare("SELECT * FROM `users`");
+        $sql->execute();
+        $items = array();
+        $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $items;
+    }
 
     public function getUserWithUsername($username)
     {

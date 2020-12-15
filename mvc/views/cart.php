@@ -1,16 +1,21 @@
 <?php
 require "./mvc/models/ProductModel.php";
 $productModel = new ProductModel;
+$totalMoney = 0;
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     if (!isset($_SESSION['products'][$id]))
         $_SESSION['products'][$id] = 0;
 
+    $qty = 1;
+    if (isset($_GET['qty'])) $qty = (int)$_GET['qty'];
+
     if (isset($_GET['action'])) {
-        if ($_GET['action'] == 'increase')
-            $_SESSION['products'][$id] += 1;
+        if ($_GET['action'] == 'increase') {
+            $_SESSION['products'][$id] += $qty;
+        }
         if ($_GET['action'] == 'reduction') {
-            $_SESSION['products'][$id] -= 1;
+            $_SESSION['products'][$id] -= $qty;
             if ($_SESSION['products'][$id] <= 0) unset($_SESSION['products'][$id]);
         }
         if ($_GET['action'] == 'remove')
@@ -21,17 +26,15 @@ if (isset($_GET['id'])) {
 ?>
 
 <?php
-require_once "./components/Base/Head.php";
+require_once "./client/Base/Head.php";
 ?>
 
 <body class="js">
 
     <?php
-    //include_once "./components/Common/PreLoader.php";
-    include_once "./components/Header/Header.php";
-
+    include_once "./client/Header/Header.php";
     $name_breadcrumb = "Cart";
-    include_once "./components/Common/Breadcrumbs.php";
+    include_once "./client/Common/Breadcrumbs.php";
     ?>
 
     <!-- Shopping Cart -->
@@ -53,39 +56,42 @@ require_once "./components/Base/Head.php";
                         </thead>
                         <tbody>
                             <?php
-                            $totalMoney = 0;
-                            foreach ($_SESSION['products'] as $key => $qty) :
-                                $product = $productModel->getProductsWithId($key);
-                                $totalMoney += $qty * $product->price;
+                            if (isset($_SESSION['products'])) :
+                                foreach ($_SESSION['products'] as $key => $qty) :
+                                    $product = $productModel->getProductsWithId($key);
+                                    $totalMoney += $qty * $product->price;
                             ?>
-                                <tr>
-                                    <td class="image" data-title="No"><img src="./public/images/products/<?php echo $product->pro_image ?>" alt="#"></td>
-                                    <td class="product-des" data-title="Description">
-                                        <p class="product-name"><a href="./products/details/<?php echo $product->id ?>"><?php echo $product->name ?></a></p>
-                                        <p class="product-des"><?php echo substr($product->description, 0, 70) . "..." ?></p>
-                                    </td>
-                                    <td class="price" data-title="Price"><span><?php echo number_format($product->price) . " VNĐ" ?></span></td>
-                                    <td class="qty" data-title="Qty">
-                                        <!-- Input Order -->
-                                        <div class="input-group">
-                                            <div class="button minus">
-                                                <a href="./cart?id=<?php echo $product->id ?>&action=reduction"><button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
-                                                        <i class="ti-minus"></i>
-                                                    </button></a>
+                                    <tr>
+                                        <td class="image" data-title="No"><img src="./public/images/products/<?php echo $product->pro_image ?>" alt="#"></td>
+                                        <td class="product-des" data-title="Description">
+                                            <p class="product-name"><a href="./products/details/<?php echo $product->id ?>">
+                                                    <?php echo $product->name ?>
+                                                </a></p>
+                                            <p class="product-des"><?php echo substr($product->description, 0, 70) . "..." ?></p>
+                                        </td>
+                                        <td class="price" data-title="Price"><span><?php echo number_format($product->price) . " VNĐ" ?></span></td>
+                                        <td class="qty" data-title="Qty">
+                                            <!-- Input Order -->
+                                            <div class="input-group">
+                                                <div class="button minus">
+                                                    <a href="./cart?id=<?php echo $product->id ?>&action=reduction"><button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
+                                                            <i class="ti-minus"></i>
+                                                        </button></a>
+                                                </div>
+                                                <input type="text" name="quant[1]" class="input-number" data-min="1" data-max="100" disabled value="<?php echo $qty ?>">
+                                                <div class="button plus">
+                                                    <a href="./cart?id=<?php echo $product->id ?>&action=increase"><button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[1]">
+                                                            <i class="ti-plus"></i>
+                                                        </button></a>
+                                                </div>
                                             </div>
-                                            <input type="text" name="quant[1]" class="input-number" data-min="1" data-max="100" disabled value="<?php echo $qty ?>">
-                                            <div class="button plus">
-                                                <a href="./cart?id=<?php echo $product->id ?>&action=increase"><button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[1]">
-                                                        <i class="ti-plus"></i>
-                                                    </button></a>
-                                            </div>
-                                        </div>
-                                        <!--/ End Input Order -->
-                                    </td>
-                                    <td class="total-amount" data-title="Total"><span><?php echo number_format($product->price * $qty) . " VNĐ" ?></span></td>
-                                    <td class="action" data-title="Remove"><a href="./cart?id=<?php echo $product->id ?>&action=remove"><i class="ti-trash remove-icon"></i></a></td>
-                                </tr>
-                            <?php endforeach ?>
+                                            <!--/ End Input Order -->
+                                        </td>
+                                        <td class="total-amount" data-title="Total"><span><?php echo number_format($product->price * $qty) . " VNĐ" ?></span></td>
+                                        <td class="action" data-title="Remove"><a href="./cart?id=<?php echo $product->id ?>&action=remove"><i class="ti-trash remove-icon"></i></a></td>
+                                    </tr>
+                            <?php endforeach;
+                            endif ?>
                         </tbody>
                     </table>
                     <!--/ End Shopping Summery -->
@@ -110,18 +116,20 @@ require_once "./components/Base/Head.php";
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-7 col-12">
-                                <div class="right">
-                                    <ul>
-                                        <li>Tổng giỏ hàng<span><?php echo number_format($totalMoney) . " VNĐ" ?></span></li>
-                                        <li>Phí vận chuyển<span>Miễn Phí</span></li>
-                                        <!-- <li>You Save<span>$20.00</span></li> -->
-                                        <li class="last">Bạn trả<span><?php echo number_format($totalMoney) . " VNĐ" ?></span></li>
-                                    </ul>
-                                    <div class="button5">
-                                        <a href="#" class="btn">Thanh toán</a>
-                                        <a href="./products" class="btn">Tiếp tục mua sắm</a>
+                                <?php if (isset($_SESSION["products"])) : ?>
+                                    <div class="right">
+                                        <ul>
+                                            <li>Tổng giỏ hàng<span><?php echo number_format($totalMoney) . " VNĐ" ?></span></li>
+                                            <li>Phí vận chuyển<span>Miễn Phí</span></li>
+                                            <!-- <li>You Save<span>$20.00</span></li> -->
+                                            <li class="last">Bạn trả<span><?php echo number_format($totalMoney) . " VNĐ" ?></span></li>
+                                        </ul>
+                                        <div class="button5">
+                                            <a href="#" class="btn">Thanh toán</a>
+                                            <a href="./products" class="btn">Tiếp tục mua sắm</a>
+                                        </div>
                                     </div>
-                                </div>
+                                <?php endif ?>
                             </div>
                         </div>
                     </div>

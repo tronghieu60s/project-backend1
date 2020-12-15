@@ -26,7 +26,7 @@ if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['repa
 }
 ?>
 
-<?php require_once "./components/Base/Head.php" ?>
+<?php require_once "./client/Base/Head.php" ?>
 
 <body class="js">
 

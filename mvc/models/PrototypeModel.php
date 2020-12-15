@@ -3,6 +3,13 @@
 class PrototypeModel extends Db
 {
 
+    public function removePrototypeWithId($id)
+    {
+        $sql = self::$connection->prepare("DELETE FROM `prototypes` WHERE `prototypes`.`type_id` = ?");
+        $sql->bind_param("i", $id);
+        return $sql->execute();
+    }
+
     public function getPrototypes()
     {
         $sql = self::$connection->prepare("SELECT * FROM `prototypes`");

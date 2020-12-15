@@ -23,17 +23,16 @@ $numOfProducts = is_null($productsSort) ? 0 : count($productsSort);
 ?>
 
 <?php
-require_once "./components/Base/Head.php";
+require_once "./client/Base/Head.php";
 ?>
 
 <body class="js">
 
     <?php
-    //include_once "./components/Common/PreLoader.php";
-    include_once "./components/Header/Header.php";
+    include_once "./client/Header/Header.php";
 
     $name_breadcrumb = "Products";
-    include_once "./components/Common/Breadcrumbs.php";
+    include_once "./client/Common/Breadcrumbs.php";
     ?>
 
     <!-- Product Style -->
@@ -114,7 +113,7 @@ require_once "./components/Base/Head.php";
                         <?php if ($numOfProducts > 0) {
                             foreach ($products as $product) : ?>
                                 <div class="col-lg-4 col-md-6 col-12">
-                                    <?php include "./components/Products/ProductItem.php"; ?>
+                                    <?php include "./client/Products/ProductItem.php"; ?>
                                 </div>
                             <?php endforeach;
                         } else { ?>
@@ -135,7 +134,7 @@ require_once "./components/Base/Head.php";
     </section>
     <!--/ End Product Style 1  -->
 
-    <?php require_once "./components/Base/Footer.php" ?>
+    <?php require_once "./client/Base/Footer.php" ?>
 </body>
 
 </html>

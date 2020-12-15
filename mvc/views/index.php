@@ -1,13 +1,12 @@
 <?php $prototypes = array_slice($data["prototypes"], 0, 5) ?>
-<?php require_once "./components/Base/Head.php" ?>
+<?php require_once "./client/Base/Head.php" ?>
 
 <body class="js">
 
     <?php
-    //include_once "./components/Common/PreLoader.php";
-    include_once "./components/Header/Header.php";
-    //include_once "./components/Common/Slider.php";
-    //include_once "./components/Home/SmallBanner.php";
+    include_once "./client/Header/Header.php";
+    //include_once "./client/Common/Slider.php";
+    //include_once "./client/Home/SmallBanner.php";
     ?>
 
     <div class="product-area section pb-0">
@@ -53,7 +52,7 @@
                                                 if ($product["type_id"] == $prototype["type_id"]) :
                                             ?>
                                                     <div class="col-xl-3 col-lg-4 col-md-4 col-6">
-                                                        <?php include "./components/Products/ProductItem.php"
+                                                        <?php include "./client/Products/ProductItem.php"
                                                         ?>
                                                     </div>
                                             <?php
@@ -75,7 +74,7 @@
     </div>
 
     <?php
-    //include_once "./components/Home/MidiumBanner.php";
+    //include_once "./client/Home/MidiumBanner.php";
     ?>
 
     <div class="product-area most-popular section pb-0">
@@ -93,7 +92,7 @@
                         <?php
                         shuffle($data["products"]);
                         foreach (array_slice($data["products"], 0, 8) as $product) :
-                            include "./components/Products/ProductItem.php";
+                            include "./client/Products/ProductItem.php";
                         endforeach
                         ?>
                     </div>
@@ -121,7 +120,7 @@
                                     <div class="row">
                                         <?php foreach (array_slice($data["products-price"], 0, 8) as $product) : ?>
                                             <div class="col-xl-3 col-lg-4 col-md-4 col-6">
-                                                <?php include "./components/Products/ProductItem.php"
+                                                <?php include "./client/Products/ProductItem.php"
                                                 ?>
                                             </div>
                                         <?php endforeach ?>
@@ -155,7 +154,7 @@
                                     <div class="row">
                                         <?php foreach (array_slice($data["products-prototypes"], 0, 8) as $product) : ?>
                                             <div class="col-xl-3 col-lg-4 col-md-4 col-6">
-                                                <?php include "./components/Products/ProductItem.php"
+                                                <?php include "./client/Products/ProductItem.php"
                                                 ?>
                                             </div>
                                         <?php endforeach ?>
@@ -171,9 +170,9 @@
     </div>
 
     <?php
-    //include "./components/Home/SingleListSection.php" 
-    //include "./components/Home/CountDown.php"
-    //include "./components/Home/Blog.php" 
+    //include "./client/Home/SingleListSection.php" 
+    //include "./client/Home/CountDown.php"
+    //include "./client/Home/Blog.php" 
     ?>
 
     <section class="shop-services section home mt-5">
@@ -219,10 +218,10 @@
         </div>
     </section>
 
-    <?php //include "./components/Home/Newsletter.php" 
+    <?php //include "./client/Home/Newsletter.php" 
     ?>
 
-    <?php require_once "./components/Base/Footer.php" ?>
+    <?php require_once "./client/Base/Footer.php" ?>
 </body>
 
 </html>
