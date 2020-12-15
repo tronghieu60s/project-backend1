@@ -23,4 +23,11 @@ $url = $base_url . $relative_path;
     <title>Tables | AdminKit Demo</title>
 
     <link href="./public/css/app.css" rel="stylesheet">
+
+    <style>
+        .btn.btn-secondary.active {
+            background-color: #3b7ddd !important;
+            border-color: #3b7ddd !important;
+        }
+    </style>
 </head>

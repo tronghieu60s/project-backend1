@@ -124,7 +124,6 @@ require_once "./client/Base/Head.php";
                     </div>
                     <div class="row">
                         <div class="w-100 d-flex justify-content-center mt-5">
-
                             <?php echo $pagination->paginate($url, $numOfProducts, $perPage, $page) ?>
                         </div>
                     </div>
