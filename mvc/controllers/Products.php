@@ -91,12 +91,16 @@ class Products extends Controller
         $productsRelate = $productModel->getProductsWithPrototypes($product->type_id);
         $prototypes = $prototypeModel->getPrototypes();
         $manufactures = $manufactureModel->getManufactures();
+
+        $commentModel = $this->model("CommentModel");
+        $comments = $commentModel->getCommentsWithProductId($id);
         
         $this->view("products-details", [
             "product" => $product,
             "products-relate" => $productsRelate,
             "prototypes" => $prototypes,
-            "manufactures" => $manufactures
+            "manufactures" => $manufactures,
+            "comments" => $comments
         ]);
     }
 

@@ -18,7 +18,7 @@ class Admin extends Controller
         }
 
         if (!$permission) {
-            header("location:./");
+            header("location: $_SERVER[PHP_SELF]");
         }
     }
 

@@ -1,3 +1,12 @@
+<?php
+$commentModel = $this->model("CommentModel");
+if (isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["message"])) {
+    $check = $commentModel->createComment($_POST["email"], $_POST["name"], $_POST["message"], $data["product"]->id);
+    if (!$check) echo "<script type='text/javascript'>alert('Có lỗi xảy ra!');</script>";
+    header("Refresh:0;");
+}
+?>
+
 <?php require_once "./client/Base/Head.php" ?>
 
 <body class="js">
@@ -81,44 +90,41 @@
                             </div>
                             <div class="col-12">
                                 <div class="comments">
-                                    <h3 class="comment-title">Comments (3)</h3>
-                                    <!-- Single Comment -->
-                                    <div class="single-comment">
-                                        <img src="https://via.placeholder.com/80x80" alt="#">
-                                        <div class="content">
-                                            <h4>Alisa harm <span>At 8:59 pm On Feb 28, 2018</span></h4>
-                                            <p>Enthusiastically leverage existing premium quality vectors with enterprise-wide innovation collaboration Phosfluorescently leverage others enterprisee Phosfluorescently leverage.</p>
-                                            <div class="button">
-                                                <a href="#" class="btn"><i class="fa fa-reply" aria-hidden="true"></i>Reply</a>
+                                    <h3 class="comment-title">Bình luận (<?= count($data["comments"]) ?>)</h3>
+                                    <?php foreach ($data["comments"] as $comment) : ?>
+                                        <div class="single-comment">
+                                            <img src="./public/images/user.png" alt="#">
+                                            <div class="content">
+                                                <h4><?= $comment["username"] ?> <span>At <?= $comment["created_at"] ?></span></h4>
+                                                <p><?= $comment["content"] ?></p>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- End Single Comment -->
+                                    <?php endforeach ?>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="reply">
                                     <div class="reply-head">
-                                        <h2 class="reply-title">Leave a Comment</h2>
+                                        <h2 class="reply-title">Để lại bình luận</h2>
                                         <!-- Comment Form -->
-                                        <form class="form" action="#">
+                                        <form class="form" method="POST">
                                             <div class="row">
                                                 <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label>Your Name<span>*</span></label>
-                                                        <input type="text" name="name" placeholder="" required="required">
+                                                        <input type="text" name="name" placeholder="" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label>Your Email<span>*</span></label>
-                                                        <input type="email" name="email" placeholder="" required="required">
+                                                        <input type="email" name="email" placeholder="" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="form-group">
                                                         <label>Your Message<span>*</span></label>
-                                                        <textarea name="message" placeholder=""></textarea>
+                                                        <textarea name="message" placeholder="" required></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="col-12">

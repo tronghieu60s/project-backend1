@@ -1,5 +1,14 @@
-<?php $controller = strtok($_SERVER["REQUEST_URI"], '?');
-$link = strtolower(substr($controller, strlen($folderNow), strlen($controller))); ?>
+<?php
+$controller = strtok($_SERVER["REQUEST_URI"], '?');
+$link = strtolower(substr($controller, strlen($folderNow), strlen($controller)));
+
+$prototypeModel = $this->model("PrototypeModel");
+$manufactureModel = $this->model("ManufactureModel");
+
+$prototypes = $prototypeModel->getPrototypes();
+$manufactures = $manufactureModel->getManufactures();
+
+?>
 
 <!-- Header Inner -->
 <div class="header-inner">
@@ -15,13 +24,22 @@ $link = strtolower(substr($controller, strlen($folderNow), strlen($controller)))
                                     <ul class="nav main-menu menu navbar-nav">
                                         <li class="<?php echo $link == "" ? "active" : "" ?>"><a href="./">Trang Chủ</a></li>
                                         <li class="<?php echo $link == "products" ? "active" : "" ?>"><a href="./products">Sản Phẩm</a></li>
-                                        <!-- <li><a href="#">Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
+                                        <li><a href="#">Hãng Sản Xuất<i class="ti-angle-down"></i><span class="new">New</span></a>
                                             <ul class="dropdown">
-                                                <li><a href="shop-grid.html">Shop Grid</a></li>
-                                                <li><a href="cart.html">Cart</a></li>
-                                                <li><a href="checkout.html">Checkout</a></li>
+                                                <?php foreach ($prototypes as $prototype) : ?>
+                                                    <li><a href="./products/categories/<?php echo $prototype["type_id"] ?>">
+                                                            <?php echo $prototype["type_name"] ?></a></li>
+                                                <?php endforeach ?>
                                             </ul>
-                                        </li> -->
+                                        </li>
+                                        <li><a href="#">Loại Sản Phẩm<i class="ti-angle-down"></i><span class="new">New</span></a>
+                                            <ul class="dropdown">
+                                                <?php foreach ($manufactures as $manufacture) : ?>
+                                                    <li><a href="./products/manufactures/<?php echo $manufacture["manu_id"] ?>">
+                                                            <?php echo $manufacture["manu_name"] ?></a></li>
+                                                <?php endforeach ?>
+                                            </ul>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
