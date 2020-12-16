@@ -5,9 +5,28 @@
 
     <?php
     include_once "./client/Header/Header.php";
-    //include_once "./client/Common/Slider.php";
-    //include_once "./client/Home/SmallBanner.php";
+    include_once "./client/Common/Slider.php";
     ?>
+
+    <!-- Start Small Banner  -->
+    <section class="small-banner section">
+        <div class="container-fluid">
+            <div class="row">
+                <?php
+                $image = "banner1.png";
+                include "./client/Home/SingleBanner.php";
+
+                $image = "banner2.png";
+                include "./client/Home/SingleBanner.php";
+
+                $image = "banner3.png";
+                include "./client/Home/SingleBanner.php"
+
+                ?>
+            </div>
+        </div>
+    </section>
+    <!-- End Small Banner -->
 
     <div class="product-area section pb-0">
         <div class="container">

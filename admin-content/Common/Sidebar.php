@@ -26,6 +26,12 @@
                     <i class="align-middle" data-feather="users"></i> <span class="align-middle">Users</span>
                 </a>
             </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="./admin/setting">
+                    <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Cài Đặt</span>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>

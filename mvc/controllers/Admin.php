@@ -102,4 +102,9 @@ class Admin extends Controller
             "users" => $users,
         ]);
     }
+
+    function Setting()
+    {
+        $this->view("admin/setting");
+    }
 }

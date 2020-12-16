@@ -21,7 +21,7 @@ if (isset($_GET['remove'])) {
             <main class="content">
                 <div class="container-fluid p-0">
 
-                    <h1 class="h3 mb-3">Quản Lí Hãng Và Loại</h1>
+                    <h1 class="h3 mb-3">Quản Lí Người Dùng</h1>
 
                     <div class="row">
                         <div class="col-12">
