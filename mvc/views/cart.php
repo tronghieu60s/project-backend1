@@ -115,7 +115,7 @@ require_once "./client/Base/Head.php";
                                                 <li class="last">Bạn trả<span><?php echo number_format($totalMoney) . " VNĐ" ?></span></li>
                                             </ul>
                                             <div class="button5">
-                                                <a href="./user" class="btn">Đặt hàng</a>
+                                                <a href="./checkout" class="btn">Đặt hàng</a>
                                                 <a href="./products" class="btn">Tiếp tục mua sắm</a>
                                             </div>
                                         </div>
