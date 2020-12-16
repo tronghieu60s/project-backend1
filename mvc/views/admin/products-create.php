@@ -1,43 +1,22 @@
 <?php
+require "./mvc/helpers/upload.php";
+$upload = new Upload;
 $productsModel = $this->model("ProductModel");
 $target_dir = "./public/images/products/";
 
-if (isset($_POST["name"]) && isset($_FILES["fileToUpload"]["name"])) {
-    $nameFile = strtotime("now") . $_FILES["fileToUpload"]["name"];
-    $target_file = $target_dir . basename($nameFile);
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+if (isset($_POST["name"]) && isset($_FILES["fileToUpload"])) {
 
-    if ($_FILES["fileToUpload"]["size"] > 500000) {
-        $message = "File quá lớn, vui lòng sử dụng file nhẹ hơn!";
-        $uploadOk = 0;
-    }
+    $uploadResult = $upload->uploadFileRandomName($target_dir, $_FILES["fileToUpload"]);
 
-    if (
-        $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-        && $imageFileType != "gif"
-    ) {
-        $message = "File của bạn không phải file ảnh, vui lòng chọn file khác!";
-        $uploadOk = 0;
-    }
-
-
-    // Check if $uploadOk is set to 0 by an error
-    if ($uploadOk == 0) {
-        echo "<script type='text/javascript'>alert('$message');</script>";
-        // if everything is ok, try to upload file
-    } else move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
-
-
-    if ($uploadOk == 1) {
+    if ($uploadResult->status) {
         $name = $_POST["name"];
         $manu_id = $_POST["manu_id"];
         $type_id = $_POST["type_id"];
         $price = $_POST["price"];
-        $pro_image = $nameFile;
+        $pro_image = $uploadResult->name;
         $description = $_POST["description"];
         $feature = $_POST["feature"];
-        $check =  $productsModel->createProduct($name,  $manu_id, $type_id, $price, $pro_image, $description, $feature);
+        $check =  $productsModel->createProduct($name, $manu_id, $type_id, $price, $pro_image, $description, $feature);
         if ($check) $message = "Thêm sản phẩm thành công!";
         else $message = "Thêm sản phẩm thất bại!";
         echo "<script type='text/javascript'>alert('$message');</script>";

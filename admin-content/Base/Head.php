@@ -20,7 +20,7 @@ $url = $base_url . $relative_path;
 
     <link rel="shortcut icon" href="./public/img/icons/icon-48x48.png" />
 
-    <title>Tables | AdminKit Demo</title>
+    <title>AdminKit</title>
 
     <link href="./public/css/app.css" rel="stylesheet">
 
