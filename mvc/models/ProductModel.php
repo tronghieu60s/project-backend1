@@ -2,6 +2,13 @@
 
 class ProductModel extends Db
 {
+    public function createProduct($name, $manu_id, $type_id, $price, $pro_image, $description, $feature)
+    {
+        $sql = self::$connection->prepare("INSERT INTO `products`(`name`, `manu_id`, `type_id`, `price`, `pro_image`, `description`, `feature`) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $sql->bind_param("siiissi", $name, $manu_id, $type_id, $price, $pro_image, $description, $feature);
+        return  $sql->execute();
+    }
 
     public function removeProductWithId($id)
     {

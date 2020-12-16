@@ -47,7 +47,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                             <label for="">Mật Khẩu</label>
                             <input type="password" name="password" id="" class="form-control px-2" placeholder="" aria-describedby="helpId">
                         </div>
-                        <div class="mb-3"><small>Bạn chưa có tài khoản? <a style="color: #5e72e4" href="./admin/signup">Đăng Kí</a></small></div>
+                        <div class="mb-3"><small>Bạn chưa có tài khoản? <a style="color: #5e72e4" href="./auth/signup">Đăng Kí</a></small></div>
                         <button type="submit" class="btn btn-primary border-0">Đăng Nhập</button>
                     </form>
                 </div>

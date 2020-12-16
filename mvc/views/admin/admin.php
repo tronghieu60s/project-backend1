@@ -16,7 +16,7 @@ if (isset($_GET['remove'])) {
 // Pagination
 require_once "./mvc/views/pagination.php";
 $pagination = new Pagination;
-$perPage = isset($_GET['perPage']) ? $_GET['perPage'] : 9;
+$perPage = isset($_GET['perPage']) ? $_GET['perPage'] : 6;
 $page = isset($_GET['page']) ? $_GET['page'] : 1; ?>
 
 <?php include_once "./admin-content/Base/Head.php" ?>

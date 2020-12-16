@@ -2,6 +2,13 @@
 
 class PrototypeModel extends Db
 {
+    public function createPrototype($name)
+    {
+        $sql = self::$connection->prepare("INSERT INTO `prototypes`(`type_name`) VALUES (?)");
+        $sql->bind_param("s", $name);
+        return $sql->execute();
+    }
+
 
     public function removePrototypeWithId($id)
     {

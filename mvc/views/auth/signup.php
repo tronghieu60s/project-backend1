@@ -53,7 +53,7 @@ if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['repa
                             <label for="">Nhập Lại Mật Khẩu</label>
                             <input type="password" name="repassword" id="" class="form-control px-2" placeholder="" aria-describedby="helpId">
                         </div>
-                        <div class="mb-3"><small>Bạn đã có tài khoản? <a style="color: #5e72e4" href="./admin/login">Đăng Nhập</a></small></div>
+                        <div class="mb-3"><small>Bạn đã có tài khoản? <a style="color: #5e72e4" href="./auth/login">Đăng Nhập</a></small></div>
                         <button type="submit" class="btn btn-primary border-0">Đăng Kí</button>
                     </form>
                 </div>

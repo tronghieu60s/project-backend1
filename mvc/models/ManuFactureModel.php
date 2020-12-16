@@ -2,6 +2,12 @@
 
 class ManufactureModel extends Db
 {
+    public function createManufacture($name)
+    {
+        $sql = self::$connection->prepare("INSERT INTO `manufactures`(`manu_name`) VALUES (?)");
+        $sql->bind_param("s", $name);
+        return $sql->execute();
+    }
 
     public function removeManufactureWithId($id)
     {
