@@ -1,9 +1,8 @@
 <?php 
 class Upload {
     
-    function uploadFile($target_dir, $file)
+    function uploadFile($target_dir, $file, $nameFile)
     {
-        $nameFile = $file["name"];
         $target_file = $target_dir . basename($nameFile);
         $uploadOk = true;
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -28,7 +27,7 @@ class Upload {
             // if everything is ok, try to upload file
         } else move_uploaded_file($file["tmp_name"], $target_file);
 
-        return (object) array('name' => $nameFile, 'status' => $uploadOk);
+        return $uploadOk;
     }
 
     function uploadFileRandomName($target_dir, $file)

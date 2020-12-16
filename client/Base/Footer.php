@@ -8,7 +8,7 @@
                     <!-- Single Widget -->
                     <div class="single-footer about">
                         <div class="logo">
-                            <a href="index.html"><img src="./public/images/logo2.png" alt="#"></a>
+                            <a href="index.html"><img src="./public/images/logo.png" alt="#"></a>
                         </div>
                         <p class="text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Saepe illum asperiores dolorum. Veniam temporibus, delectus magnam excepturi doloribus asperiores perspiciatis hic assumenda molestias! Illo id ipsam eveniet dolor sequi pariatur!</p>
                         <p class="call">Có câu hỏi? Gọi cho chúng tôi 24/7<span><a href="tel:123456789">+0123 456 789</a></span></p>
