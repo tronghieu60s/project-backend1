@@ -1,3 +1,8 @@
+<?php
+if (isset($_GET["logout"]))
+    unset($_SESSION["user"]);
+?>
+
 <!-- Topbar -->
 <div class="topbar">
     <div class="container">
@@ -19,7 +24,8 @@
                         <li><i class="ti-location-pin"></i> Vị trí cửa hàng</li>
                         <li><i class="ti-alarm-clock"></i> Bão Deal</li>
                         <?php if (isset($_SESSION["user"])) { ?>
-                            <li><i class="ti-user"></i> <a href="#"><?= $_SESSION["user"] ?></a></li>
+                            <li><i class="ti-user"></i> <a href="./user"><?= $_SESSION["user"] ?></a></li>
+                            <li><i class="ti-arrow-right"></i> <a href="?logout">Đăng Xuất</a></li>
                         <?php } else { ?>
                             <li><i class="ti-power-off"></i><a href="./auth/login">Đăng Nhập</a></li>
                         <?php } ?>

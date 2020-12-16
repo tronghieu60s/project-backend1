@@ -52,7 +52,7 @@ if (isset($_GET['q'])) $search = $_GET['q'];
                         <a href="#" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                     </div> -->
                     <div class="sinlge-bar">
-                        <a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                        <a href="./user" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                     </div>
                     <div class="sinlge-bar shopping">
                         <a href="./cart" class="single-icon"><i class="ti-bag"></i> <span class="total-count"><?php echo $totalProduct ?></span></a>

@@ -1,28 +1,28 @@
 <?php
-require "./mvc/models/ProductModel.php";
-$productModel = new ProductModel;
-$totalMoney = 0;
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    if (!isset($_SESSION['products'][$id]))
-        $_SESSION['products'][$id] = 0;
+if (!isset($_SESSION["user"])) header("location: ./auth/login");
 
-    $qty = 1;
-    if (isset($_GET['qty'])) $qty = (int)$_GET['qty'];
+$orderModel = $this->model("OrderModel");
+$userModel = $this->model("UserModel");
+$user = $userModel->getUserWithUsername($_SESSION["user"]);
 
-    if (isset($_GET['action'])) {
-        if ($_GET['action'] == 'increase') {
-            $_SESSION['products'][$id] += $qty;
+if (isset($_SESSION['products'])) {
+    if (count($_SESSION['products']) > 0) {
+        $orderSuccess = true;
+        foreach ($_SESSION['products'] as $key => $qty) {
+            $check = $orderModel->createOrder($key, $user->user_id, $qty);
+            if (!$check) $orderSuccess = false;
         }
-        if ($_GET['action'] == 'reduction') {
-            $_SESSION['products'][$id] -= $qty;
-            if ($_SESSION['products'][$id] <= 0) unset($_SESSION['products'][$id]);
-        }
-        if ($_GET['action'] == 'remove')
-            unset($_SESSION['products'][$id]);
+        if ($orderSuccess) {
+            unset($_SESSION['products']);
+            $message = "Đặt hàng thành công";
+        } else $message = "Đặt hàng không thành công. Có lỗi xảy ra.";
+
+        echo "<script>alert('$message')</script>";
     }
-    header('location: ./cart');
 }
+
+$products = $orderModel->getProductsWithUserOrderStatus($user->user_id, 0);
+$productDelivered = $orderModel->getProductsWithUserOrderStatus($user->user_id, 1);
 ?>
 
 <?php
@@ -33,13 +33,17 @@ require_once "./client/Base/Head.php";
 
     <?php
     include_once "./client/Header/Header.php";
-    $name_breadcrumb = "Cart";
+    $name_breadcrumb = "User";
     include_once "./client/Common/Breadcrumbs.php";
     ?>
 
     <!-- Shopping Cart -->
     <div class="shopping-cart section">
         <div class="container">
+            <div class="mb-3">
+                <h3>Sản phẩm bạn đã đặt hàng</h3>
+                <small class="text-muted">Chúng tôi sẽ giao sớm nhất cho bạn...</small>
+            </div>
             <div class="row">
                 <div class="col-12">
                     <!-- Shopping Summery -->
@@ -51,44 +55,32 @@ require_once "./client/Base/Head.php";
                                 <th class="text-center">ĐƠN GIÁ</th>
                                 <th class="text-center">SỐ LƯỢNG</th>
                                 <th class="text-center">TỔNG</th>
-                                <th class="text-center"><i class="ti-trash remove-icon"></i></th>
+                                <th class="text-center">TRẠNG THÁI</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            if (isset($_SESSION['products'])) :
-                                foreach ($_SESSION['products'] as $key => $qty) :
-                                    $product = $productModel->getProductsWithId($key);
-                                    $totalMoney += $qty * $product->price;
+                            if ($products != null) :
+                                foreach ($products as $product) :
                             ?>
                                     <tr>
-                                        <td class="image" data-title="No"><img src="./public/images/products/<?php echo $product->pro_image ?>" alt="#"></td>
+                                        <td class="image" data-title="No"><img src="./public/images/products/<?php echo $product["pro_image"] ?>" alt="#"></td>
                                         <td class="product-des" data-title="Description">
-                                            <p class="product-name"><a href="./products/details/<?php echo $product->id ?>">
-                                                    <?php echo $product->name ?>
+                                            <p class="product-name"><a href="./products/details/<?php echo $product["id"] ?>">
+                                                    <?php echo $product["name"] ?>
                                                 </a></p>
-                                            <p class="product-des"><?php echo substr($product->description, 0, 70) . "..." ?></p>
+                                            <p class="product-des"><?php echo substr($product["description"], 0, 70) . "..." ?></p>
                                         </td>
-                                        <td class="price" data-title="Price"><span><?php echo number_format($product->price) . " VNĐ" ?></span></td>
+                                        <td class="price" data-title="Price"><span><?php echo number_format($product["price"]) . " VNĐ" ?></span></td>
                                         <td class="qty" data-title="Qty">
                                             <!-- Input Order -->
                                             <div class="input-group">
-                                                <div class="button minus">
-                                                    <a href="./cart?id=<?php echo $product->id ?>&action=reduction"><button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
-                                                            <i class="ti-minus"></i>
-                                                        </button></a>
-                                                </div>
-                                                <input type="text" name="quant[1]" class="input-number" data-min="1" data-max="100" disabled value="<?php echo $qty ?>">
-                                                <div class="button plus">
-                                                    <a href="./cart?id=<?php echo $product->id ?>&action=increase"><button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[1]">
-                                                            <i class="ti-plus"></i>
-                                                        </button></a>
-                                                </div>
+                                                <input type="text" name="quant[1]" class="input-number" data-min="1" data-max="100" disabled value="<?php echo $product["quantity"] ?>">
                                             </div>
                                             <!--/ End Input Order -->
                                         </td>
-                                        <td class="total-amount" data-title="Total"><span><?php echo number_format($product->price * $qty) . " VNĐ" ?></span></td>
-                                        <td class="action" data-title="Remove"><a href="./cart?id=<?php echo $product->id ?>&action=remove"><i class="ti-trash remove-icon"></i></a></td>
+                                        <td class="total-amount" data-title="Total"><span><?php echo number_format($product["price"] * $product["quantity"]) . " VNĐ" ?></span></td>
+                                        <td class="action"><?= $product["status"] == 0 ? "Đang giao hàng" : "Đã giao hàng" ?></td>
                                     </tr>
                             <?php endforeach;
                             endif ?>
@@ -97,34 +89,53 @@ require_once "./client/Base/Head.php";
                     <!--/ End Shopping Summery -->
                 </div>
             </div>
+            <div class="mb-3 mt-5">
+                <h3>Sản phẩm đã được giao</h3>
+                <small class="text-muted">Chúng tôi mong bạn thích sản phẩm. Mãi iu...</small>
+            </div>
             <div class="row">
                 <div class="col-12">
-                    <!-- Total Amount -->
-                    <div class="total-amount">
-                        <div class="row">
-                            <div class="col-lg-8 col-md-5 col-12">
-                            </div>
-                            <div class="col-lg-4 col-md-7 col-12">
-                                <?php if (isset($_SESSION["products"])) {
-                                    if (count($_SESSION["products"]) > 0) { ?>
-                                        <div class="right">
-                                            <ul>
-                                                <li>Tổng giỏ hàng<span><?php echo number_format($totalMoney) . " VNĐ" ?></span></li>
-                                                <li>Phí vận chuyển<span>Miễn Phí</span></li>
-                                                <!-- <li>You Save<span>$20.00</span></li> -->
-                                                <li class="last">Bạn trả<span><?php echo number_format($totalMoney) . " VNĐ" ?></span></li>
-                                            </ul>
-                                            <div class="button5">
-                                                <a href="./user" class="btn">Đặt hàng</a>
-                                                <a href="./products" class="btn">Tiếp tục mua sắm</a>
+                    <!-- Shopping Summery -->
+                    <table class="table shopping-summery">
+                        <thead>
+                            <tr class="main-hading">
+                                <th>SẢN PHẨM</th>
+                                <th>TÊN</th>
+                                <th class="text-center">ĐƠN GIÁ</th>
+                                <th class="text-center">SỐ LƯỢNG</th>
+                                <th class="text-center">TỔNG</th>
+                                <th class="text-center">TRẠNG THÁI</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if ($products != null) :
+                                foreach ($productDelivered as $product) :
+                            ?>
+                                    <tr>
+                                        <td class="image" data-title="No"><img src="./public/images/products/<?php echo $product["pro_image"] ?>" alt="#"></td>
+                                        <td class="product-des" data-title="Description">
+                                            <p class="product-name"><a href="./products/details/<?php echo $product["id"] ?>">
+                                                    <?php echo $product["name"] ?>
+                                                </a></p>
+                                            <p class="product-des"><?php echo substr($product["description"], 0, 70) . "..." ?></p>
+                                        </td>
+                                        <td class="price" data-title="Price"><span><?php echo number_format($product["price"]) . " VNĐ" ?></span></td>
+                                        <td class="qty" data-title="Qty">
+                                            <!-- Input Order -->
+                                            <div class="input-group">
+                                                <input type="text" name="quant[1]" class="input-number" data-min="1" data-max="100" disabled value="<?php echo $product["quantity"] ?>">
                                             </div>
-                                        </div>
-                                <?php }
-                                } ?>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ End Total Amount -->
+                                            <!--/ End Input Order -->
+                                        </td>
+                                        <td class="total-amount" data-title="Total"><span><?php echo number_format($product["price"] * $product["quantity"]) . " VNĐ" ?></span></td>
+                                        <td class="action"><?= $product["status"] == 0 ? "Đang giao hàng" : "Đã giao hàng" ?></td>
+                                    </tr>
+                            <?php endforeach;
+                            endif ?>
+                        </tbody>
+                    </table>
+                    <!--/ End Shopping Summery -->
                 </div>
             </div>
         </div>

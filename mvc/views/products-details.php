@@ -109,16 +109,19 @@ if (isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["message"]))
                                         <!-- Comment Form -->
                                         <form class="form" method="POST">
                                             <div class="row">
+                                                <?php if (isset($_SESSION["user"])) : ?>
+                                                    <p class="mb-3">Bạn đang đăng nhập với tài khoản <b><?= $_SESSION["user"] ?></b>.</p>
+                                                <?php endif ?>
                                                 <div class="col-lg-6 col-md-6 col-12">
-                                                    <div class="form-group">
+                                                    <div class="form-group <?= isset($_SESSION["user"]) ? "d-none" : "" ?>">
                                                         <label>Your Name<span>*</span></label>
-                                                        <input type="text" name="name" placeholder="" required>
+                                                        <input type="text" name="name" placeholder="" required value="<?= isset($_SESSION["user"]) ? $_SESSION["user"] : "" ?>">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-12">
-                                                    <div class="form-group">
+                                                    <div class="form-group <?= isset($_SESSION["user"]) ? "d-none" : "" ?>">
                                                         <label>Your Email<span>*</span></label>
-                                                        <input type="email" name="email" placeholder="" required>
+                                                        <input type="email" name="email" placeholder="" required value="<?= isset($_SESSION["user"]) ? $_SESSION["user"] . "@gmail.com" : "" ?>">
                                                     </div>
                                                 </div>
                                                 <div class="col-12">

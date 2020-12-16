@@ -4,7 +4,6 @@ $productModel = new ProductModel;
 // Pagination
 require_once "./mvc/views/pagination.php";
 $pagination = new Pagination;
-$url = $_SERVER["REQUEST_URI"];
 $perPage = isset($_GET['perPage']) ? $_GET['perPage'] : 9;
 $page = isset($_GET['page']) ? $_GET['page'] : 1; ?>
 
@@ -124,7 +123,7 @@ require_once "./client/Base/Head.php";
                     </div>
                     <div class="row">
                         <div class="w-100 d-flex justify-content-center mt-5">
-                            <?php echo $pagination->paginate($url, $numOfProducts, $perPage, $page) ?>
+                            <?php echo $pagination->paginate($_SERVER["REQUEST_URI"], $numOfProducts, $perPage, $page) ?>
                         </div>
                     </div>
                 </div>

@@ -27,7 +27,7 @@ class Admin extends Controller
         $productModel = $this->model("ProductModel");
         $products = $productModel->getProducts();
 
-        $this->view("admin/admin", [
+        $this->view("admin/products", [
             "products" => $products,
         ]);
     }
@@ -60,7 +60,7 @@ class Admin extends Controller
 
 
         $products = $productModel->getProducts();
-        $this->view("admin/admin", [
+        $this->view("admin/products", [
             "products" => $products,
         ]);
     }
