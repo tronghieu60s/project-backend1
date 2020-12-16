@@ -19,7 +19,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             $alert = "Tên tài khoản hoặc mật khẩu không chính xác.";
         } else {
             $_SESSION["user"] = $_POST['username'];
-            header("location:../");
+            header("location:../admin");
         }
     }
 }

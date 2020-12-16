@@ -17,7 +17,9 @@ class Admin extends Controller
             }
         }
 
-        if (!$permission) $this->view("page404");
+        if (!$permission) {
+            header("location:./");
+        }
     }
 
     function Index()
