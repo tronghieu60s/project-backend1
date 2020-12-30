@@ -72,11 +72,19 @@ class Admin extends Controller
                 $this->view("admin/manufacture-create");
                 return;
             }
+            if ($path2 == "edit") {
+                $this->view("admin/manufacture-edit");
+                return;
+            }
         }
 
         if ($path1 == "prototype") {
             if ($path2 == "create") {
                 $this->view("admin/prototype-create");
+                return;
+            }
+            if ($path2 == "edit") {
+                $this->view("admin/prototype-edit");
                 return;
             }
         }

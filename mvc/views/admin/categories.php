@@ -68,7 +68,7 @@ if (isset($_GET['remove']) && isset($_GET['type'])) {
                                                 <td><?= $manufacture["manu_id"] ?></td>
                                                 <td><?= $manufacture["manu_name"] ?></td>
                                                 <td class="table-action">
-                                                    <a href="#"><i class="align-middle" data-feather="edit-2"></i></a>
+                                                    <a href="./admin/categories/manufacture/edit?id=<?= $manufacture["manu_id"] ?>"><i class="align-middle" data-feather="edit-2"></i></a>
                                                     <a href="./admin/categories?remove=<?= $manufacture["manu_id"] ?>&type=manufacture">
                                                         <i class="align-middle" data-feather="trash"></i></a>
                                                 </td>
@@ -102,7 +102,7 @@ if (isset($_GET['remove']) && isset($_GET['type'])) {
                                                 <td><?= $prototype["type_id"] ?></td>
                                                 <td><?= $prototype["type_name"] ?></td>
                                                 <td class="table-action">
-                                                    <a href="#"><i class="align-middle" data-feather="edit-2"></i></a>
+                                                    <a href="./admin/categories/prototype/edit?id=<?= $prototype["type_id"] ?>"><i class="align-middle" data-feather="edit-2"></i></a>
                                                     <a href="./admin/categories?remove=<?= $prototype["type_id"] ?>&type=prototype"><i class="align-middle" data-feather="trash"></i></a>
                                                 </td>
                                             </tr>

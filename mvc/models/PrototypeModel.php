@@ -9,6 +9,13 @@ class PrototypeModel extends Db
         return $sql->execute();
     }
 
+    public function updatePrototypeWithId($id, $name)
+    {
+        $sql = self::$connection->prepare("UPDATE `prototypes` SET `type_name`= ? WHERE `type_id` = ?");
+        $sql->bind_param("si", $name, $id);
+        return $sql->execute();
+    }
+
 
     public function removePrototypeWithId($id)
     {

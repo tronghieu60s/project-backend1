@@ -33,7 +33,7 @@ if (isset($_POST["name"])) {
                                             <label class="form-label">Tên Loại Sản Phẩm</label>
                                             <input name="name" type="text" class="form-control" placeholder="Nhập tên...">
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-primary">Tạo Mới</button>
                                     </form>
                                 </div>
                             </div>

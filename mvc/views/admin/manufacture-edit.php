@@ -1,13 +1,18 @@
 <?php
 $manufacturesModel = $this->model("ManuFactureModel");
-if (isset($_POST["name"])) {
-    $name = $_POST["name"];
-    $check =  $manufacturesModel->createManufacture($name);
-    if ($check) $message = "Thêm hãng thành công!";
-    else $message = "Thêm hãng thất bại!";
-    echo "<script type='text/javascript'>alert('$message');</script>";
-    header("location:../../categories");
-}
+if (isset($_GET["id"])) {
+    if (isset($_POST["name"])) {
+        $name = $_POST["name"];
+        $check =  $manufacturesModel->updateManufactureWithId($_GET["id"], $name);
+        if ($check) $message = "Cập nhật thành công!";
+        else $message = "Cập nhật thất bại!";
+        echo "<script type='text/javascript'>alert('$message');</script>";
+    }
+
+    $manufacture =  $manufacturesModel->getManufacturesWithId($_GET["id"]);
+    if ($manufacture == null) header("location:../../categories");
+} else header("location:../../categories");
+
 ?>
 
 <?php include_once "./admin-content/Base/Head.php" ?>
@@ -31,9 +36,9 @@ if (isset($_POST["name"])) {
                                     <form method="POST">
                                         <div class="form-group">
                                             <label class="form-label">Tên Hãng Sản Xuất</label>
-                                            <input name="name" type="text" class="form-control" placeholder="Nhập tên...">
+                                            <input value="<?= $manufacture->manu_name ?>" name="name" type="text" class="form-control" placeholder="Nhập tên...">
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Tạo Mới</button>
+                                        <button type="submit" class="btn btn-primary">Cập Nhật</button>
                                     </form>
                                 </div>
                             </div>

@@ -9,6 +9,14 @@ class ManufactureModel extends Db
         return $sql->execute();
     }
 
+    public function updateManufactureWithId($id, $name)
+    {
+        $sql = self::$connection->prepare("UPDATE `manufactures` SET `manu_name`= ? WHERE `manu_id` = ?");
+        $sql->bind_param("si", $name, $id);
+        return $sql->execute();
+    }
+
+
     public function removeManufactureWithId($id)
     {
         $sql = self::$connection->prepare("DELETE FROM `manufactures` WHERE `manufactures`.`manu_id` = ?");
