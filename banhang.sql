@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 30, 2020 lúc 06:02 AM
+-- Thời gian đã tạo: Th12 30, 2020 lúc 12:20 PM
 -- Phiên bản máy phục vụ: 10.4.11-MariaDB
 -- Phiên bản PHP: 7.4.2
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `products`
+-- Cơ sở dữ liệu: `banhang`
 --
 
 -- --------------------------------------------------------
@@ -46,7 +46,8 @@ INSERT INTO `comments` (`comment_id`, `email`, `username`, `content`, `rating`, 
 (5, 'admin@gmail.com', 'admin', 'xin chào', 1, 9, '2020-12-16 12:54:15'),
 (6, 'admin@gmail.com', 'admin', 'Tai nghe rất hay', 4, 5, '2020-12-30 04:50:53'),
 (7, 'admin@gmail.com', 'admin', 'nghe chan, am bash cui bap', 2, 5, '2020-12-30 04:54:07'),
-(8, 'admin@gmail.com', 'admin', 'ahihi', 5, 5, '2020-12-30 04:56:50');
+(8, 'admin@gmail.com', 'admin', 'ahihi', 5, 5, '2020-12-30 04:56:50'),
+(9, 'admin@gmail.com', 'admin', 'tốt', 5, 17, '2020-12-30 11:20:06');
 
 -- --------------------------------------------------------
 
@@ -98,7 +99,9 @@ INSERT INTO `orders` (`order_id`, `product_id`, `user_id`, `quantity`, `status`,
 (4, 17, 7, 1, 0, 0),
 (5, 23, 7, 1, 0, 0),
 (6, 21, 7, 1, 0, 0),
-(7, 5, 6, 1, 0, 0);
+(7, 5, 6, 1, 0, 0),
+(8, 9, 6, 1, 0, 0),
+(9, 17, 6, 6, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -244,7 +247,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT cho bảng `manufactures`
@@ -256,7 +259,7 @@ ALTER TABLE `manufactures`
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
