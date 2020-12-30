@@ -11,19 +11,19 @@
 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="./admin">
-                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Sản Phẩm</span>
                 </a>
             </li>
 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="./admin/categories">
-                    <i class="align-middle" data-feather="tag"></i> <span class="align-middle">Categories</span>
+                    <i class="align-middle" data-feather="tag"></i> <span class="align-middle">Hãng và Loại</span>
                 </a>
             </li>
 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="./admin/users">
-                    <i class="align-middle" data-feather="users"></i> <span class="align-middle">Users</span>
+                    <i class="align-middle" data-feather="users"></i> <span class="align-middle">Người Dùng</span>
                 </a>
             </li>
 

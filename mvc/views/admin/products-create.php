@@ -82,7 +82,7 @@ if (isset($_POST["name"]) && isset($_FILES["fileToUpload"])) {
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label w-100">Hình ảnh</label>
-                                            <input type="file" name="fileToUpload" required>
+                                            <input type="file" name="fileToUpload" accept="image/*" required>
                                             <small class="form-text text-muted">Chọn hình ảnh cho sản phẩm của bạn.</small>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Tạo Mới</button>

@@ -56,10 +56,8 @@ class Admin extends Controller
             return;
         }
 
-        $product = $productModel->getProductsWithId($id);
         if ($path == "edit") {
             $this->view("admin/products-edit", [
-                "product" => $product,
                 "manuFactures" => $manuFactures,
                 "prototypes" => $prototypes
             ]);
@@ -109,10 +107,20 @@ class Admin extends Controller
         ]);
     }
 
-    function Users()
+    function Users($path = null)
     {
         $userModel = $this->model("UserModel");
         $users = $userModel->getUsers();
+
+        if ($path == "create") {
+            $this->view("admin/users-create");
+            return;
+        }
+
+        if ($path == "edit") {
+            $this->view("admin/users-edit");
+            return;
+        }
 
         $this->view("admin/users", [
             "users" => $users,

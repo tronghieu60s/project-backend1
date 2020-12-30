@@ -9,6 +9,13 @@ class UserModel extends Db
         return $sql->execute();
     }
 
+    public function updateUserWithId($id, $password, $permission)
+    {
+        $sql = self::$connection->prepare("UPDATE `users` SET `password`= ?, `permission`= ? WHERE `user_id` = ?");
+        $sql->bind_param("sii", $password, $permission, $id);
+        return $sql->execute();
+    }
+
     public function getUsers()
     {
         $sql = self::$connection->prepare("SELECT * FROM `users`");
@@ -27,10 +34,10 @@ class UserModel extends Db
         return $result;
     }
     
-    public function createUser($username, $password)
+    public function createUser($username, $password, $permission = 1)
     {
-        $sql = self::$connection->prepare("INSERT INTO `users`(`username`, `password`) VALUES (?, ?)");
-        $sql->bind_param("ss", $username, $password);
+        $sql = self::$connection->prepare("INSERT INTO `users`(`username`, `password`, `permission`) VALUES (?, ?, ?)");
+        $sql->bind_param("ssi", $username, $password, $permission);
         return $sql->execute();
     }
 }
