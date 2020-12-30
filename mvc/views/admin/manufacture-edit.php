@@ -1,17 +1,17 @@
 <?php
 $manufacturesModel = $this->model("ManuFactureModel");
-if (isset($_GET["id"])) {
-    if (isset($_POST["name"])) {
-        $name = $_POST["name"];
-        $check =  $manufacturesModel->updateManufactureWithId($_GET["id"], $name);
-        if ($check) $message = "Cập nhật thành công!";
-        else $message = "Cập nhật thất bại!";
-        echo "<script type='text/javascript'>alert('$message');</script>";
-    }
+if (!isset($_GET["id"])) header("location:../../categories");
 
-    $manufacture =  $manufacturesModel->getManufacturesWithId($_GET["id"]);
-    if ($manufacture == null) header("location:../../categories");
-} else header("location:../../categories");
+if (isset($_POST["name"])) {
+    $name = $_POST["name"];
+    $check =  $manufacturesModel->updateManufactureWithId($_GET["id"], $name);
+    if ($check) $message = "Cập nhật thành công!";
+    else $message = "Cập nhật thất bại!";
+    echo "<script type='text/javascript'>alert('$message');</script>";
+}
+
+$manufacture =  $manufacturesModel->getManufacturesWithId($_GET["id"]);
+if ($manufacture == null) header("location:../../categories");
 
 ?>
 

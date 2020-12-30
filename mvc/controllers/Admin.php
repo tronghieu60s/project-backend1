@@ -48,6 +48,14 @@ class Admin extends Controller
             return;
         }
 
+        if ($path == "edit") {
+            $this->view("admin/products-edit", [
+                "manuFactures" => $manuFactures,
+                "prototypes" => $prototypes
+            ]);
+            return;
+        }
+
         $product = $productModel->getProductsWithId($id);
         if ($path == "edit") {
             $this->view("admin/products-edit", [

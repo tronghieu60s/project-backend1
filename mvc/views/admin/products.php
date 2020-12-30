@@ -53,7 +53,7 @@ $numOfProducts = is_null($productsSort) ? 0 : count($productsSort);
                                 <div class="input-group input-group-navbar">
                                     <input name="q" type="text" class="form-control" placeholder="Search…" aria-label="Search" value="<?php echo $search ?>">
                                     <div class="input-group-append">
-                                        <button class="btn" type="button">
+                                        <button class="btn" type="submit">
                                             <i class="align-middle" data-feather="search"></i>
                                         </button>
                                     </div>
@@ -98,7 +98,7 @@ $numOfProducts = is_null($productsSort) ? 0 : count($productsSort);
                                                     <td><?= $product["feature"] ?></td>
                                                     <td><?= $product["created_at"] ?></td>
                                                     <td class="table-action">
-                                                        <a href="#"><i class="align-middle" data-feather="edit-2"></i></a>
+                                                        <a href="./admin/products/edit?id=<?= $product["id"] ?>"><i class=" align-middle" data-feather="edit-2"></i></a>
                                                         <a href="./admin?remove=<?= $product["id"] ?>"><i class="align-middle" data-feather="trash"></i></a>
                                                     </td>
                                                 </tr>

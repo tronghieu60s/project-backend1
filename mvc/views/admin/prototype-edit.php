@@ -1,18 +1,17 @@
 <?php
 $prototypesModel = $this->model("PrototypeModel");
+if (!isset($_GET["id"])) header("location:../../categories");
 
-if (isset($_GET["id"])) {
-    if (isset($_POST["name"])) {
-        $name = $_POST["name"];
-        $check =  $prototypesModel->updatePrototypeWithId($_GET["id"], $name);
-        if ($check) $message = "Cập nhật thành công!";
-        else $message = "Cập nhật thất bại!";
-        echo "<script type='text/javascript'>alert('$message');</script>";
-    }
+if (isset($_POST["name"])) {
+    $name = $_POST["name"];
+    $check =  $prototypesModel->updatePrototypeWithId($_GET["id"], $name);
+    if ($check) $message = "Cập nhật thành công!";
+    else $message = "Cập nhật thất bại!";
+    echo "<script type='text/javascript'>alert('$message');</script>";
+}
 
-    $prototype =  $prototypesModel->getPrototypeWithId($_GET["id"]);
-    if ($prototype == null) header("location:../../categories");
-} else header("location:../../categories");
+$prototype =  $prototypesModel->getPrototypeWithId($_GET["id"]);
+if ($prototype == null) header("location:../../categories");
 ?>
 
 <?php include_once "./admin-content/Base/Head.php" ?>

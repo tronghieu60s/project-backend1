@@ -2,6 +2,12 @@
 $productsModel = $this->model("ProductModel");
 $target_dir = "./public/images/products/";
 
+if (!isset($_GET["id"])) header("location:../");
+
+$product = $productsModel->getProductsWithId($_GET["id"]);
+if ($product == null)
+    header("location:../");
+
 if (isset($_POST["name"]) && isset($_FILES["fileToUpload"]["name"])) {
     $nameFile = strtotime("now") . $_FILES["fileToUpload"]["name"];
     $target_file = $target_dir . basename($nameFile);
@@ -17,8 +23,7 @@ if (isset($_POST["name"]) && isset($_FILES["fileToUpload"]["name"])) {
         $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
         && $imageFileType != "gif"
     ) {
-        $message = "File của bạn không phải file ảnh, vui lòng chọn file khác!";
-        $uploadOk = 0;
+        $nameFile = $product->pro_image;
     }
 
 
@@ -37,13 +42,13 @@ if (isset($_POST["name"]) && isset($_FILES["fileToUpload"]["name"])) {
         $pro_image = $nameFile;
         $description = $_POST["description"];
         $feature = $_POST["feature"];
-        $check =  $productsModel->createProduct($name,  $manu_id, $type_id, $price, $pro_image, $description, $feature);
-        if ($check) $message = "Thêm sản phẩm thành công!";
-        else $message = "Thêm sản phẩm thất bại!";
+        $check =  $productsModel->updateProductWithId($_GET["id"], $name, $manu_id, $type_id, $price, $pro_image, $description, $feature);
+        if ($check) $message = "Sửa sản phẩm thành công!";
+        else $message = "Sửa sản phẩm thất bại!";
         echo "<script type='text/javascript'>alert('$message');</script>";
     }
 
-    //header("location:../");
+    $product = $productsModel->getProductsWithId($_GET["id"]);
 }
 ?>
 
@@ -68,13 +73,13 @@ if (isset($_POST["name"]) && isset($_FILES["fileToUpload"]["name"])) {
                                     <form method="POST" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label class="form-label">Tên</label>
-                                            <input name="name" type="text" class="form-control" placeholder="Nhập tên..." required>
+                                            <input value="<?= $product->name ?>" name="name" type="text" class="form-control" placeholder="Nhập tên..." required>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Hãng Sản Xuất</label>
                                             <select class="form-control" name="manu_id" id="">
                                                 <?php foreach ($data["manuFactures"] as $manuFacture) : ?>
-                                                    <option value="<?= $manuFacture["manu_id"] ?>"><?= $manuFacture["manu_name"] ?></option>
+                                                    <option <?= $product->manu_id == $manuFacture["manu_id"] ? "selected" : ""  ?> value="<?= $manuFacture["manu_id"] ?>"><?= $manuFacture["manu_name"] ?></option>
                                                 <?php endforeach ?>
                                             </select>
                                         </div>
@@ -82,31 +87,34 @@ if (isset($_POST["name"]) && isset($_FILES["fileToUpload"]["name"])) {
                                             <label class="form-label">Loại Hàng</label>
                                             <select class="form-control" name="type_id" id="">
                                                 <?php foreach ($data["prototypes"] as $prototype) : ?>
-                                                    <option value="<?= $prototype["type_id"] ?>"><?= $prototype["type_name"] ?></option>
+                                                    <option <?= $product->type_id == $prototype["type_id"] ? "selected" : ""  ?> value="<?= $prototype["type_id"] ?>"><?= $prototype["type_name"] ?></option>
                                                 <?php endforeach ?>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Mô Tả</label>
-                                            <textarea name="description" class="form-control" placeholder="Nhập mô tả ở đây..." rows="3"></textarea>
+                                            <textarea name="description" class="form-control" placeholder="Nhập mô tả ở đây..." rows="3">
+                                                <?= $product->description ?>
+                                            </textarea>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Giá</label>
-                                            <input name="price" type="number" class="form-control" required>
+                                            <input value="<?= $product->price ?>" name="price" type="number" class="form-control" required>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Feature</label>
                                             <select class="form-control" name="feature" id="">
-                                                <option value="1">On</option>
-                                                <option value="0" selected>Off</option>
+                                                <option value="1" <?= $product->feature == "1" ? "selected" : ""  ?>>On</option>
+                                                <option value="0" <?= $product->feature == "0" ? "selected" : ""  ?>>Off</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label w-100">Hình ảnh</label>
-                                            <input type="file" name="fileToUpload" required>
+                                            <input type="file" name="fileToUpload">
+                                            <img width="120" src="./public/images/products/<?= $product->pro_image ?>" alt="">
                                             <small class="form-text text-muted">Chọn hình ảnh cho sản phẩm của bạn.</small>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-primary">Cập Nhật</button>
                                     </form>
                                 </div>
                             </div>
