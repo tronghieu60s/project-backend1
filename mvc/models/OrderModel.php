@@ -9,6 +9,16 @@ class OrderModel extends Db
         return  $sql->execute();
     }
 
+    public function getOrderWithProductAndUser($product_id, $user_id)
+    {
+        $sql = self::$connection->prepare("SELECT * FROM `orders` WHERE `product_id` = ? AND `user_id` = ?");
+        $sql->bind_param("ii", $product_id, $user_id);
+        $sql->execute();
+        $items = array();
+        $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $items;
+    }
+
     public function getProductsWithUserOrderStatus($user_id, $status)
     {
         $sql = self::$connection->prepare("SELECT * FROM `orders` 

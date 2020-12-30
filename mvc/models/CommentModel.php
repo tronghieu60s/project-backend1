@@ -2,10 +2,10 @@
 
 class CommentModel extends Db
 {
-    public function createComment($email, $username, $content, $product_id)
+    public function createComment($email, $username, $content, $rating, $product_id)
     {
-        $sql = self::$connection->prepare("INSERT INTO `comments`(`email`, `username`, `content`, `product_id`) VALUES (?,?,?,?)");
-        $sql->bind_param("sssi",$email, $username, $content, $product_id);
+        $sql = self::$connection->prepare("INSERT INTO `comments`(`email`, `username`, `content`, `rating`, `product_id`) VALUES (?,?,?,?,?)");
+        $sql->bind_param("sssii",$email, $username, $content, $rating, $product_id);
         return $sql->execute();
     }
 

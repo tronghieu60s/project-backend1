@@ -1,7 +1,29 @@
 <?php
+$totalRating = 0;
+foreach ($data["comments"] as $comment)
+    $totalRating += $comment["rating"];
+
 $commentModel = $this->model("CommentModel");
-if (isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["message"])) {
-    $check = $commentModel->createComment($_POST["email"], $_POST["name"], $_POST["message"], $data["product"]->id);
+$orderModel = $this->model("OrderModel");
+$userModel = $this->model("UserModel");
+
+$confirmUserOrder = array();
+if (isset($_SESSION["user"])) {
+    $user = $userModel->getUserWithUsername($_SESSION["user"]);
+    $confirmUserOrder = $orderModel->getOrderWithProductAndUser($data["product"]->id, $user->user_id);
+}
+
+if (
+    isset($_POST["name"]) &&
+    isset($_POST["rating"]) && isset($_POST["email"]) && isset($_POST["message"])
+) {
+    $check = $commentModel->createComment(
+        $_POST["email"],
+        $_POST["name"],
+        $_POST["message"],
+        $_POST["rating"],
+        $data["product"]->id
+    );
     if (!$check) echo "<script type='text/javascript'>alert('Có lỗi xảy ra!');</script>";
     header("Refresh:0;");
 }
@@ -68,6 +90,16 @@ if (isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["message"]))
                                         <h2 class="blog-title m-0"><?php echo $data["product"]->name ?></h2>
                                         <h4 class="blog-title mt-3" style="color: #F7941D;"><?php echo number_format($data["product"]->price); ?> VNĐ</h4>
                                         <ul>
+                                            <li>
+                                                <div>
+                                                    <?php for ($i = 0; $i < ceil($totalRating / count($data["comments"])); $i++) : ?>
+                                                        <i class="fa fa-star" aria-hidden="true" style="color: yellowgreen"></i>
+                                                    <?php endfor ?>
+                                                    <?php for ($i = 0; $i < 5 - ceil($totalRating / count($data["comments"])); $i++) : ?>
+                                                        <i class="fa fa-star-o" aria-hidden="true" style="color: yellowgreen"></i>
+                                                    <?php endfor ?>
+                                                </div>
+                                            </li>
                                             <li class="my-2"><b>Số lượng:</b>
                                                 <form action="./cart">
                                                     <input class="ml-2" type="number" name="qty" style="width: 100px;" value="1">
@@ -95,6 +127,14 @@ if (isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["message"]))
                                         <div class="single-comment">
                                             <img src="./public/images/user.png" alt="#">
                                             <div class="content">
+                                                <div>
+                                                    <?php for ($i = 0; $i < $comment["rating"]; $i++) : ?>
+                                                        <i class="fa fa-star" aria-hidden="true" style="color: yellowgreen"></i>
+                                                    <?php endfor ?>
+                                                    <?php for ($i = 0; $i < 5 - $comment["rating"]; $i++) : ?>
+                                                        <i class="fa fa-star-o" aria-hidden="true" style="color: yellowgreen"></i>
+                                                    <?php endfor ?>
+                                                </div>
                                                 <h4><?= $comment["username"] ?> <span>At <?= $comment["created_at"] ?></span></h4>
                                                 <p><?= $comment["content"] ?></p>
                                             </div>
@@ -104,41 +144,52 @@ if (isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["message"]))
                             </div>
                             <div class="col-12">
                                 <div class="reply">
-                                    <div class="reply-head">
-                                        <h2 class="reply-title">Để lại bình luận</h2>
-                                        <!-- Comment Form -->
-                                        <form class="form" method="POST">
-                                            <div class="row">
-                                                <?php if (isset($_SESSION["user"])) : ?>
-                                                    <p class="mb-3">Bạn đang đăng nhập với tài khoản <b><?= $_SESSION["user"] ?></b>.</p>
-                                                <?php endif ?>
-                                                <div class="col-lg-6 col-md-6 col-12">
-                                                    <div class="form-group <?= isset($_SESSION["user"]) ? "d-none" : "" ?>">
-                                                        <label>Your Name<span>*</span></label>
-                                                        <input type="text" name="name" placeholder="" required value="<?= isset($_SESSION["user"]) ? $_SESSION["user"] : "" ?>">
+                                    <?php if (count($confirmUserOrder)) { ?>
+                                        <div class="reply-head">
+                                            <h2 class="reply-title">Để lại bình luận</h2>
+                                            <!-- Comment Form -->
+                                            <form class="form" method="POST">
+                                                <div class="row">
+                                                    <?php if (isset($_SESSION["user"])) : ?>
+                                                        <p class="mb-3">Bạn đang đăng nhập với tài khoản <b><?= $_SESSION["user"] ?></b>.</p>
+                                                    <?php endif ?>
+                                                    <div class="col-lg-6 col-md-6 col-12">
+                                                        <div class="form-group <?= isset($_SESSION["user"]) ? "d-none" : "" ?>">
+                                                            <label>Your Name<span>*</span></label>
+                                                            <input type="text" name="name" placeholder="" required value="<?= isset($_SESSION["user"]) ? $_SESSION["user"] : "" ?>">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-12">
+                                                        <div class="form-group <?= isset($_SESSION["user"]) ? "d-none" : "" ?>">
+                                                            <label>Your Email<span>*</span></label>
+                                                            <input type="email" name="email" placeholder="" required value="<?= isset($_SESSION["user"]) ? $_SESSION["user"] . "@gmail.com" : "" ?>">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label>Đánh Giá</label>
+                                                            <input class="ml-5" style="width: auto;" type="number" name="rating" value="5" id="" min="1" max="5" required>
+                                                            <i class="fa fa-star" aria-hidden="true" style="color: yellowgreen"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label>Your Message<span>*</span></label>
+                                                            <textarea name="message" placeholder="" required></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group button">
+                                                            <button type="submit" class="btn">Đăng Bình Luận</button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6 col-md-6 col-12">
-                                                    <div class="form-group <?= isset($_SESSION["user"]) ? "d-none" : "" ?>">
-                                                        <label>Your Email<span>*</span></label>
-                                                        <input type="email" name="email" placeholder="" required value="<?= isset($_SESSION["user"]) ? $_SESSION["user"] . "@gmail.com" : "" ?>">
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                        <label>Your Message<span>*</span></label>
-                                                        <textarea name="message" placeholder="" required></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="form-group button">
-                                                        <button type="submit" class="btn">Post comment</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        <!-- End Comment Form -->
-                                    </div>
+                                            </form>
+                                            <!-- End Comment Form -->
+                                        </div>
+                                    <?php } else { ?>
+                                        <h5>Bạn phải mua sản phẩm để được đánh giá và bình luận.</h5>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
