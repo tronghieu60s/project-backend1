@@ -2,6 +2,9 @@
 $totalRating = 0;
 foreach ($data["comments"] as $comment)
     $totalRating += $comment["rating"];
+	
+$averageRating = 0;
+if($totalRating > 0) $averageRating = ceil($totalRating / count($data["comments"]));
 
 $commentModel = $this->model("CommentModel");
 $orderModel = $this->model("OrderModel");
@@ -92,10 +95,10 @@ if (
                                         <ul>
                                             <li>
                                                 <div>
-                                                    <?php for ($i = 0; $i < ceil($totalRating / count($data["comments"])); $i++) : ?>
+                                                    <?php for ($i = 0; $i < $averageRating; $i++) : ?>
                                                         <i class="fa fa-star" aria-hidden="true" style="color: yellowgreen"></i>
                                                     <?php endfor ?>
-                                                    <?php for ($i = 0; $i < 5 - ceil($totalRating / count($data["comments"])); $i++) : ?>
+                                                    <?php for ($i = 0; $i < 5 - $averageRating; $i++) : ?>
                                                         <i class="fa fa-star-o" aria-hidden="true" style="color: yellowgreen"></i>
                                                     <?php endfor ?>
                                                 </div>
