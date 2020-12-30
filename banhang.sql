@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 16, 2020 lúc 03:19 PM
+-- Thời gian đã tạo: Th12 30, 2020 lúc 06:02 AM
 -- Phiên bản máy phục vụ: 10.4.11-MariaDB
 -- Phiên bản PHP: 7.4.2
 
@@ -33,6 +33,7 @@ CREATE TABLE `comments` (
   `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `username` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rating` int(11) NOT NULL DEFAULT 1,
   `product_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -41,11 +42,11 @@ CREATE TABLE `comments` (
 -- Đang đổ dữ liệu cho bảng `comments`
 --
 
-INSERT INTO `comments` (`comment_id`, `email`, `username`, `content`, `product_id`, `created_at`) VALUES
-(1, 'Trần Trọng Hiếu', 'tronghieu60s@gmail.com', 'híu', 257, '2020-12-16 05:15:15'),
-(3, 'Hiếu', 'tronghieu60s@gmail.com', 'híu', 257, '2020-12-16 05:16:44'),
-(4, 'tronghieu60s@gmail.com', 'Trần Trọng Hiếu', 'alo alo ', 257, '2020-12-16 05:25:13'),
-(5, 'admin@gmail.com', 'admin', 'xin chào', 9, '2020-12-16 12:54:15');
+INSERT INTO `comments` (`comment_id`, `email`, `username`, `content`, `rating`, `product_id`, `created_at`) VALUES
+(5, 'admin@gmail.com', 'admin', 'xin chào', 1, 9, '2020-12-16 12:54:15'),
+(6, 'admin@gmail.com', 'admin', 'Tai nghe rất hay', 4, 5, '2020-12-30 04:50:53'),
+(7, 'admin@gmail.com', 'admin', 'nghe chan, am bash cui bap', 2, 5, '2020-12-30 04:54:07'),
+(8, 'admin@gmail.com', 'admin', 'ahihi', 5, 5, '2020-12-30 04:56:50');
 
 -- --------------------------------------------------------
 
@@ -69,7 +70,8 @@ INSERT INTO `manufactures` (`manu_id`, `manu_name`) VALUES
 (7, 'HP'),
 (8, 'Samsung'),
 (9, 'Huawei'),
-(10, 'Asus');
+(10, 'Asus'),
+(14, 'Xiaomi');
 
 -- --------------------------------------------------------
 
@@ -91,9 +93,12 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `product_id`, `user_id`, `quantity`, `status`, `created_at`) VALUES
-(1, 257, 7, 3, 0, 0),
 (2, 13, 7, 5, 1, 0),
-(3, 11, 7, 9, 0, 0);
+(3, 11, 7, 9, 0, 0),
+(4, 17, 7, 1, 0, 0),
+(5, 23, 7, 1, 0, 0),
+(6, 21, 7, 1, 0, 0),
+(7, 5, 6, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -119,7 +124,7 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`id`, `name`, `manu_id`, `type_id`, `price`, `pro_image`, `description`, `feature`, `created_at`) VALUES
 (1, 'Đồng hồ Nam Citizen BI5000-87L', 1, 3, 1548000, 'dong-ho-nam-citizen-bi5000-87l-trang-600x600.jpg', 'Xu hướng thiết kế chính của đồng hồ Citizen là đơn giản và thanh lịch. Citizen luôn chú trọng đến việc đổi mới và tạo sự phong phú cho các mẫu thiết kế. Các chi tiết cũng được Citizen đầu tư kỹ lưỡng trong khâu chế tác.\r\nSở hữu thiết kế sang trọng và tinh tế, chiếc đồng hồ quartz này phù hợp với các quý ông mạnh mẽ và thời thượng\r\n\r\nĐồng hồ Citizen BI5000-87L mang thương hiệu đồng hồ Citizen đến từ Nhật Bản, nổi tiếng với nhiều chiếc đồng hồ hiện đại và sang trọng.\r\n\r\nLớp vỏ ngoài bền chắc giúp đồng hồ có khả năng chịu va đập tốt\r\n\r\n- Mặt kính của mẫu đồng hồ Citizen nam này có độ trong suốt tốt, cứng cáp, hạn chế nứt vỡ khi rơi ở độ cao vừa phải.\r\n\r\n- Bộ khung chắc chắn, khả năng chống oxi hóa và ăn mòn tốt, bảo vệ an toàn cho các chi tiết máy bên trong.\r\n\r\nHệ số chống nước 5 ATM, chiếc đồng hồ nam này vẫn an toàn khi bạn đeo đi mưa và tắm, không mang khi bơi lội hay lặn\r\n\r\nNgười dùng nắm bắt thông tin ngày trong tháng dễ dàng hơn khi chiếc đồng hồ kim này được trang bị lịch ngày\r\n\r\nDây đồng hồ có độ bền cao, chịu được mọi điều kiện thời tiết, dễ dàng đánh bóng như mới sau một thời gian sử dụng', 1, '2020-11-17 07:46:13'),
-(2, 'Laptop Lenovo IdeaPad S145 15IIL i3 1005G1/4GB/256GB/Win10 (81W8001XVN)', 2, 4, 11490000, 'lenovo-ideapad-s145-81w8001xvn-a4-216292-600x600s.jpg', 'Thiết kế đơn giản, thời trang và tinh tế\r\nLaptop  mang thiết kế cơ bản của dòng Lenovo IdeaPad S145 có ngoại hình đẹp mắt, lớp vỏ được làm bằng nhựa phủ sơn màu xám sang trọng với logo Lenovo được đặt gọn gàng sang một bên trên nắp lưng. Độ dày 17.9 mm, cân nặng 1.79 kg phù hợp với các bạn học sinh sinh viên, người thường xuyên di chuyển.\r\nĐáp ứng tốt nhu cầu học tập, văn phòng\r\nMáy được trang bị con chip Intel Core i3 Ice Lake thế hệ 10 và RAM 4 GB. Với cấu hình này, dân văn phòng hay các bạn học sinh, sinh viên có thể yên tâm xử lí các tác vụ thường ngày như soạn thảo Word, soạn bài thuyết trình trên PowerPoint, lướt web, nghe nhạc, ... mượt mà.', 0, '2020-11-17 07:49:36'),
+(2, 'Laptop Lenovo IdeaPad S145 15IIL i3 1005G1/4GB/256GB/Win10 (81W8001XVN)', 14, 4, 1149000, '1609296039lenovo-ideapad-s145-207798-2-600x600.jpg', '                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Thiết kế đơn giản, thời trang và tinh tế\r\nLaptop  mang thiết kế cơ bản của dòng Lenovo IdeaPad S145 có ngoại hình đẹp mắt, lớp vỏ được làm bằng nhựa phủ sơn màu xám sang trọng với logo Lenovo được đặt gọn gàng sang một bên trên nắp lưng. Độ dày 17.9 mm, cân nặng 1.79 kg phù hợp với các bạn học sinh sinh viên, người thường xuyên di chuyển.\r\nĐáp ứng tốt nhu cầu học tập, văn phòng\r\nMáy được trang bị con chip Intel Core i3 Ice Lake thế hệ 10 và RAM 4 GB. Với cấu hình này, dân văn phòng hay các bạn học sinh, sinh viên có thể yên tâm xử lí các tác vụ thường ngày như soạn thảo Word, soạn bài thuyết trình trên PowerPoint, lướt web, nghe nhạc, ... mượt mà.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ', 1, '2020-11-17 07:49:36'),
 (3, 'Laptop Lenovo IdeaPad C340 14IML i5 10210U/8GB/512GB/2GB MX230/Touch/Win10 (81TK007RVN)', 2, 4, 13920000, 'lenovo-ideapad-c340-14iml-i5-81tk007rvn-kg-213526-600x600.jpg', 'Máy tính nhỏ gọn, siêu linh hoạt\r\nLenovo IdeaPad C340 có trọng lượng 1.65 kg, không quá nặng nề khi mang laptop trên vai suốt ngày dài.\r\nNhà sản xuất Lenovo còn trang bị cho chiếc máy tính xách tay này bộ đèn bàn phím tiện lợi, hỗ trợ bạn tối đa trong trường hợp bạn phải làm việc ban đêm nhưng ngại bật đèn làm phiền người khác.\r\n\r\nĐặc biệt laptop Lenovo IdeaPad C340 là dòng laptop lai, có khả năng gập xoay 360 độ với màn hình cảm ứng mượt mà. Điều này giúp bạn tự do làm việc với mọi tư thế thoải mái nhất.\r\n\r\nViệc trang bị màn hình cảm ứng còn giúp ích rất nhiều đối với dân thiết kế, vẽ AI, những người cần chỉnh sửa bài thuyết trình thường xuyên.\r\n\r\nKích thước màn hình 14 inch cân bằng với trọng lượng giúp tổng thể máy trông gọn gàng. Với độ phân giải Full HD (1920 x 1080), IdeaPad C340 cho hình ảnh sắc nét, đẹp mắt. ', 1, '2020-11-17 07:49:36'),
 (4, 'Loa Bluetooth LG Xboom Go PL5 Xanh Đen\r\n', 3, 1, 2690000, 'loa-bluetooth-lg-xboom-go-pl5-xanh-den-600x600-1-600x600.jpg', 'Thiết kế đơn giản, phong cách năng động\r\nLoa Bluetooth LG Xboom Go PL5 Xanh Đen có thiết kế hình trụ nằm ngang tạo cảm giác vừa vặn khi cầm trên tay, màu xanh đen trẻ trung năng động.\r\n\r\nThoải mái mang chiếc loa Bluetooth này tham gia vào các bữa tiệc tại bể bơi hay ngoài trời mà không cần lo lắng bị ướt nước với chuẩn kháng nước IPX5.', 1, '2020-11-17 07:51:47'),
 (5, 'Tai nghe Bluetooth Kanen K6', 5, 2, 600000, 'tai-nghe-bluetooth-kanen-k6-avatar-600x600.jpg', 'Cách sử dụng tai nghe\r\n- Nút tròn ấn giữ: Bật/tắt nguồn.\r\n\r\n- Nút tròn ấn 1 lần: Dừng/ phát nhạc, nhận/ngắt cuộc gọi.\r\n\r\n- Nút tròn ấn 2 lần: Kích hoạt Siri, Bixby,...\r\nCách kết nối tai nghe Bluetooth\r\n- Bạn ấn nút nguồn (hình tròn), lúc này tai nghe sẽ chớp xanh đỏ liên tục để chờ kết nối.\r\n\r\n- Mở Bluetooth trong điện thoại và dò tìm tên K6 để kết nối.\r\n\r\n- Tai nghe sẽ tự động kết nối với điện thoại ở những lần sau.', 0, '2020-11-17 07:53:04'),
@@ -140,7 +145,8 @@ INSERT INTO `products` (`id`, `name`, `manu_id`, `type_id`, `price`, `pro_image`
 (20, 'Laptop Lenovo IdeaPad S340 14IIL i3 1005G1/8GB/512GB/Win10 (81VV003VVN)', 2, 4, 12990000, 'lenovo-ideapad-s340-14iil-i3-1005g1-8gb-512gb-win1-20-600x600.jpg', 'Lenovo IdeaPad S340 14IIL (81VV003VVN) sở hữu cấu hình khá, hiệu năng ổn định và thiết kế tinh tế đẹp mắt. Đây sẽ là chiếc laptop văn phòng phù hợp với đối tượng sinh viên, dân văn phòng thường xuyên xử lý các tác vụ văn phòng, học tập và chỉnh sửa hình ảnh cơ bản. \r\nHiệu năng ổn định đáp ứng nhu cầu văn phòng và thiết kế cơ bản \r\nLenovo IdeaPad S340 14IIL (81VV003VVN) được trang bị bộ vi xử lý Intel Core i3 Ice Lake thế hệ 10 mới ra mắt với những cải tiến về hiệu năng và tốc độ xử lý so với thế hệ trước cùng với RAM 8 GB mang đến sức mạnh xử lý tốt các tác vụ học tập, văn phòng cơ bản và xử lý hình ảnh vừa phải trên các ứng dụng Photoshop, AI,... ', 1, '2020-11-17 08:59:03'),
 (21, 'Điện thoại Samsung Galaxy A51 (8GB/128GB)', 8, 5, 8390000, 'samsung-galaxy-a51-8gb-blue-400x460-1-400x460.png', 'Galaxy A51 8GB là phiên bản nâng cấp RAM của smartphone tầm trung đình đám Galaxy A51 từ Samsung. Sản phẩm nổi bật với thiết kế sang trọng, màn hình Infinity-O cùng cụm 4 camera đột phá. sản phẩm cũng là Smartphone Android Bán Chạy Nhất Thế Giới Quý 1/2020 (theo báo cáo từ Strategy Analytics).\r\nMàn hình tràn viền Infinity-O thời thượng\r\nMặt trước của Galaxy A51 8GB nổi bật với màn hình tràn viền vô cực Infinity-O kế thừa từ series S, Note cao cấp. ', 1, '2020-11-17 09:00:04'),
 (22, 'Điện thoại iPhone 11 Pro Max 64GB', 6, 5, 29990000, 'iphone-11-pro-max-black-400x460s.png', 'Trong năm 2019 thì chiếc smartphone được nhiều người mong muốn sở hữu trên tay và sử dụng nhất không ai khác chính là iPhone 11 Pro Max 64GB tới từ nhà Apple.\r\nCamera được cải tiến mạnh mẽ\r\nChắc chắn lý do lớn nhất mà bạn muốn nâng cấp lên iPhone 11 Pro Max chính là cụm camera mới được Apple nâng cấp rất nhiều.', 1, '2020-11-17 09:01:00'),
-(23, 'Apple Watch S6 LTE 40mm viền nhôm dây cao su\r\n', 6, 3, 14391000, 'apple-watch-s6-lte-40mm-vien-nhom-day-cao-su-ava-600x600.jpg', 'Kiểu dáng năng động, cá tính\r\nApple Watch S6 LTE 40mm viền nhôm dây cao su sở hữu màn hình 1.57 inch giúp hiển thị đầy đủ thông tin và hình ảnh sắc nét. Dây đeo được làm từ chất liệu cao su dẻo dai và êm ái, cho cảm giác dễ chịu khi mang. Thêm vào đó, mặt kính cường lực Sapphire giúp chống trầy, tăng độ bền cho thiết bị. Các đường nét được thiết kế tinh xảo làm nên sự đẳng cấp của Apple Watch.\r\n\r\nApple Watch S6 LTE 40mm viền nhôm dây cao su sở hữu thiết kế hiện đại\r\n\r\nĐồng hồ thông minh Apple sở hữu chip S6 cho hiệu năng vượt bậc\r\nNhờ có bộ xử lý S6 hoàn toàn mới, đồng hồ đạt hiệu năng cao hơn 20% so với dòng chip S5 thế hệ trước, đây được coi là bước nhảy vọt về phần cứng của dòng Apple Watch.\r\n\r\nApple Watch S6 LTE 40mm viền nhôm dây cao su sở hữu bộ chip xử lý cho hiệu năng cao\r\n\r\nHệ điều hành watchOS 7.0 đem đến nhiều tính năng mới\r\nVới các tính năng mới như: Family Setup, nhận biết rửa tay, chia sẻ màn hình qua iMessages, Siri dịch nhanh 10 ngôn ngữ, 7 loại mặt đồng hồ mới, fitness ... nhờ đó, hệ điều hành WatchOS 7.0 này sẽ giúp Apple Watch S6 trở nên hoàn hảo hơn.\r\n\r\nApple Watch S6 LTE 40mm viền nhôm dây cao su sử dụng hệ điều hành watchOS 7\r\n\r\nCảm biến SpO2 giúp theo dõi nồng độ oxy trong máu\r\nApple Watch 2020 được trang bị cảm biến SpO2 hỗ trợ người dùng theo dõi nồng độ oxy trong máu định kỳ, ngay cả khi bạn đang ngủ. Bên cạnh đó, thiết bị này còn được hỗ trợ đo điện tâm đồ ECG giúp bạn chăm sóc sức khỏe của mình tốt hơn.', 0, '2020-11-17 09:01:41');
+(23, 'Apple Watch S6 LTE 40mm viền nhôm dây cao su\r\n', 6, 3, 14391000, 'apple-watch-s6-lte-40mm-vien-nhom-day-cao-su-ava-600x600.jpg', 'Kiểu dáng năng động, cá tính\r\nApple Watch S6 LTE 40mm viền nhôm dây cao su sở hữu màn hình 1.57 inch giúp hiển thị đầy đủ thông tin và hình ảnh sắc nét. Dây đeo được làm từ chất liệu cao su dẻo dai và êm ái, cho cảm giác dễ chịu khi mang. Thêm vào đó, mặt kính cường lực Sapphire giúp chống trầy, tăng độ bền cho thiết bị. Các đường nét được thiết kế tinh xảo làm nên sự đẳng cấp của Apple Watch.\r\n\r\nApple Watch S6 LTE 40mm viền nhôm dây cao su sở hữu thiết kế hiện đại\r\n\r\nĐồng hồ thông minh Apple sở hữu chip S6 cho hiệu năng vượt bậc\r\nNhờ có bộ xử lý S6 hoàn toàn mới, đồng hồ đạt hiệu năng cao hơn 20% so với dòng chip S5 thế hệ trước, đây được coi là bước nhảy vọt về phần cứng của dòng Apple Watch.\r\n\r\nApple Watch S6 LTE 40mm viền nhôm dây cao su sở hữu bộ chip xử lý cho hiệu năng cao\r\n\r\nHệ điều hành watchOS 7.0 đem đến nhiều tính năng mới\r\nVới các tính năng mới như: Family Setup, nhận biết rửa tay, chia sẻ màn hình qua iMessages, Siri dịch nhanh 10 ngôn ngữ, 7 loại mặt đồng hồ mới, fitness ... nhờ đó, hệ điều hành WatchOS 7.0 này sẽ giúp Apple Watch S6 trở nên hoàn hảo hơn.\r\n\r\nApple Watch S6 LTE 40mm viền nhôm dây cao su sử dụng hệ điều hành watchOS 7\r\n\r\nCảm biến SpO2 giúp theo dõi nồng độ oxy trong máu\r\nApple Watch 2020 được trang bị cảm biến SpO2 hỗ trợ người dùng theo dõi nồng độ oxy trong máu định kỳ, ngay cả khi bạn đang ngủ. Bên cạnh đó, thiết bị này còn được hỗ trợ đo điện tâm đồ ECG giúp bạn chăm sóc sức khỏe của mình tốt hơn.', 0, '2020-11-17 09:01:41'),
+(259, 'Điện thoại Xiaomi Redmi Note 9', 14, 5, 4790000, '1608133484xiaomi-redmi-note-9-den-600x600-600x600.jpg', 'Xiaomi Redmi Note 9 là mẫu smartphone tầm trung, cân bằng giữa các yếu tố thiết kế, camera và hiệu năng, đáp ứng mượt mà hầu hết các nhu cầu từ cơ bản đến nâng cao của người dùng.\r\nMàn hình nốt ruồi tràn viền thời thượng\r\nChiếc điện thoại tầm trung Xiaomi Redmi Note 9 sở hữu thiết kế bo cong mềm mại ở các cạnh, cho trải nghiệm dễ cầm nắm và đằm tay hơn. Mặt sau vẫn được làm nổi bật và dễ nhận biết từ xa với cụm camera nổi bật, đặc trưng của dòng Redmi Note năm nay.', 1, '2020-12-16 15:44:44');
 
 -- --------------------------------------------------------
 
@@ -183,8 +189,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `password`, `permission`) VALUES
-(6, 'admin', '$2y$10$ofpofF4oKnuOVRjtygimc.x8nDjfywIBjmVo1qavN0tR.RCiFYG/6', 9),
-(7, 'admin2', '$2y$10$sWKLR2udBWP25jV2AOOAPuDD3ZHam6OvT8QkaBsvB0k7P5RRBh35S', 1);
+(6, 'admin', '$2y$10$oCyMN1.Tiozw6v6VufSaBeMyfwkEt64FAJVnhNh34k.tg/MMh82Iy', 9),
+(7, 'admin2', '$2y$10$sWKLR2udBWP25jV2AOOAPuDD3ZHam6OvT8QkaBsvB0k7P5RRBh35S', 1),
+(16, 'tronghieu60s', '$2y$10$.gnsiV80Tnx/Pxiue5XVQOUaX7FcFO7cF/Xd/IEuAtbYBeKBuwUmO', 1);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -237,25 +244,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `manufactures`
 --
 ALTER TABLE `manufactures`
-  MODIFY `manu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `manu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=259;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=260;
 
 --
 -- AUTO_INCREMENT cho bảng `prototypes`
@@ -267,7 +274,7 @@ ALTER TABLE `prototypes`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
