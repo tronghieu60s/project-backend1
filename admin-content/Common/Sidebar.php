@@ -22,6 +22,12 @@
             </li>
 
             <li class="sidebar-item">
+                <a class="sidebar-link" href="./admin/orders">
+                    <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Đơn Đặt Hàng</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
                 <a class="sidebar-link" href="./admin/users">
                     <i class="align-middle" data-feather="users"></i> <span class="align-middle">Người Dùng</span>
                 </a>

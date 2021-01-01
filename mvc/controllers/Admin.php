@@ -127,6 +127,16 @@ class Admin extends Controller
         ]);
     }
 
+    function Orders()
+    {
+        $orderModel = $this->model("OrderModel");
+        $orders = $orderModel->getOrders();
+
+        $this->view("admin/orders", [
+            "orders" => $orders,
+        ]);
+    }
+
     function Setting()
     {
         $this->view("admin/setting");

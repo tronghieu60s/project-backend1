@@ -3,12 +3,16 @@ $search = "";
 if (isset($_GET['q'])) $search = $_GET['q'];
 
 $productModel = $this->model("ProductModel");
+$orderModel = $this->model("OrderModel");
 if (isset($_GET['remove'])) {
-    $check = $productModel->removeProductWithId($_GET['remove']);
-    if ($check) $message = "Xóa sản phẩm thành công!";
-    else $message = "Xóa sản phẩm thất bại!";
+    $orders = $orderModel->getOrdersWithIdProduct($_GET['remove']);
+    if ($orders == null) {
+        $check = $productModel->removeProductWithId($_GET['remove']);
+        if ($check) $message = "Xóa sản phẩm thành công!";
+        else $message = "Xóa sản phẩm thất bại!";
+    } else $message = "Bạn không thể xóa, có " . count($orders) . " đơn hàng của sản phẩm này.";
     echo "<script>alert('$message');</script>";
-    header("Refresh:0; url=admin");
+    ("Refresh:0; url=admin");
 }
 ?>
 
@@ -18,8 +22,6 @@ require_once "./mvc/helpers/pagination.php";
 $pagination = new Pagination;
 $perPage = isset($_GET['perPage']) ? $_GET['perPage'] : 6;
 $page = isset($_GET['page']) ? $_GET['page'] : 1; ?>
-
-<?php include_once "./admin-content/Base/Head.php" ?>
 
 <?php
 // Sort
@@ -34,6 +36,8 @@ if ($sort == "price") $productsSort = $data["products-price"];
 $products = !is_null($productsSort) ? $pagination->arrSlice($productsSort, $page, $perPage) : null;
 $numOfProducts = is_null($productsSort) ? 0 : count($productsSort);
 ?>
+
+<?php include_once "./admin-content/Base/Head.php" ?>
 
 <body>
     <div class="wrapper">
@@ -91,7 +95,7 @@ $numOfProducts = is_null($productsSort) ? 0 : count($productsSort);
                                                 <tr>
                                                     <td><img style="width: 100%;" src="./public/images/products/<?= $product["pro_image"] ?>" alt=""></td>
                                                     <td><?= $product["id"] ?></td>
-                                                    <td><?= $product["name"] ?></td>
+                                                    <td><a href="./products/details/<?= $product["id"] ?>"><?= $product["name"] ?></a></td>
                                                     <td><?= $product["manu_name"] ?></td>
                                                     <td><?= $product["type_name"] ?></td>
                                                     <td><?= number_format($product["price"]) ?></td>

@@ -1,9 +1,13 @@
 <?php
 $userModel = $this->model("UserModel");
+$orderModel = $this->model("OrderModel");
 if (isset($_GET['remove'])) {
-    $check = $userModel->removeUserWithId($_GET['remove']);
-    if ($check) $message = "Xóa người dùng thành công!";
-    else $message = "Xóa người dùng thất bại!";
+    $orders = $orderModel->getOrdersWithIdUser($_GET['remove']);
+    if($orders == null){
+        $check = $userModel->removeUserWithId($_GET['remove']);
+        if ($check) $message = "Xóa người dùng thành công!";
+        else $message = "Xóa người dùng thất bại!";
+    } else $message = "Bạn không thể xóa, có " . count($orders) . " đơn hàng bởi user này.";
     echo "<script>alert('$message');</script>";
     header("Refresh:0; url=users");
 }
@@ -47,7 +51,7 @@ if (isset($_GET['remove'])) {
                                             <tr>
                                                 <td><?= $user["user_id"] ?></td>
                                                 <td><?= $user["username"] ?></td>
-                                                <td><?= $user["permission"] ?></td>
+                                                <td><?= $user["permission"] == 9 ? "Administrator" : "Editor" ?></td>
                                                 <td class="table-action">
                                                     <a href="./admin/users/edit?username=<?= $user["username"] ?>"><i class="align-middle" data-feather="edit-2"></i></a>
                                                     <a href="./admin/users?remove=<?= $user["user_id"] ?>"><i class="align-middle" data-feather="trash"></i></a>

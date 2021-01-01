@@ -1,6 +1,6 @@
 <?php
 // Database
-define('DB_NAME', 'banhang');
+define('DB_NAME', 'team6_banhang');
 define('DB_USER', 'root');
 define('DB_PASSWORD', '');
 define('DB_HOST', 'localhost');

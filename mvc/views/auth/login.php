@@ -49,6 +49,15 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                         </div>
                         <div class="mb-3"><small>Bạn chưa có tài khoản? <a style="color: #5e72e4" href="./auth/signup">Đăng Kí</a></small></div>
                         <button type="submit" class="btn btn-primary border-0">Đăng Nhập</button>
+
+                        <div class="p-3 mt-5 border">
+                            --- TEST ADMINISTRATOR ---<br />
+                            Username: admin<br />
+                            Password: 12345<br /><br />
+                            --- TEST NORMAL USER ---<br />
+                            Username: user<br />
+                            Password: 12345
+                        </div>
                     </form>
                 </div>
                 <div class="col"></div>

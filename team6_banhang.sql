@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 30, 2020 lúc 12:20 PM
+-- Thời gian đã tạo: Th1 01, 2021 lúc 08:24 AM
 -- Phiên bản máy phục vụ: 10.4.11-MariaDB
 -- Phiên bản PHP: 7.4.2
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `banhang`
+-- Cơ sở dữ liệu: `team6_banhang`
 --
 
 -- --------------------------------------------------------
@@ -88,20 +88,6 @@ CREATE TABLE `orders` (
   `status` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `orders`
---
-
-INSERT INTO `orders` (`order_id`, `product_id`, `user_id`, `quantity`, `status`, `created_at`) VALUES
-(2, 13, 7, 5, 1, 0),
-(3, 11, 7, 9, 0, 0),
-(4, 17, 7, 1, 0, 0),
-(5, 23, 7, 1, 0, 0),
-(6, 21, 7, 1, 0, 0),
-(7, 5, 6, 1, 0, 0),
-(8, 9, 6, 1, 0, 0),
-(9, 17, 6, 6, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -193,8 +179,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `username`, `password`, `permission`) VALUES
 (6, 'admin', '$2y$10$oCyMN1.Tiozw6v6VufSaBeMyfwkEt64FAJVnhNh34k.tg/MMh82Iy', 9),
-(7, 'admin2', '$2y$10$sWKLR2udBWP25jV2AOOAPuDD3ZHam6OvT8QkaBsvB0k7P5RRBh35S', 1),
-(16, 'tronghieu60s', '$2y$10$.gnsiV80Tnx/Pxiue5XVQOUaX7FcFO7cF/Xd/IEuAtbYBeKBuwUmO', 1);
+(17, 'user', '$2y$10$QVUeLR2UTqG2dqtKwQ/y3.uDFy8yRBq/9hwBWoxcB43D2321We17K', 1);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -277,7 +262,7 @@ ALTER TABLE `prototypes`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
