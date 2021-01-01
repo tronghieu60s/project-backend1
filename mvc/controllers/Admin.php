@@ -32,7 +32,7 @@ class Admin extends Controller
         ]);
     }
 
-    function Products($path = null, $id = null)
+    function Products($path = null)
     {
         $productModel = $this->model("ProductModel");
         $manufacturesModel = $this->model("ManuFactureModel");
