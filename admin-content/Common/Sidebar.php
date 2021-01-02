@@ -28,6 +28,12 @@
             </li>
 
             <li class="sidebar-item">
+                <a class="sidebar-link" href="./admin/comments">
+                    <i class="align-middle" data-feather="message-circle"></i> <span class="align-middle">Bình Luận</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
                 <a class="sidebar-link" href="./admin/users">
                     <i class="align-middle" data-feather="users"></i> <span class="align-middle">Người Dùng</span>
                 </a>

@@ -137,6 +137,16 @@ class Admin extends Controller
         ]);
     }
 
+    function Comments()
+    {
+        $commentModel = $this->model("CommentModel");
+        $comments = $commentModel->getComments();
+
+        $this->view("admin/comments", [
+            "comments" => $comments,
+        ]);
+    }
+
     function Setting()
     {
         $this->view("admin/setting");

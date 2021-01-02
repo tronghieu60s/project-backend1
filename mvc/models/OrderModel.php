@@ -6,7 +6,8 @@ class OrderModel extends Db
     {
         $sql = self::$connection->prepare("SELECT * FROM `orders` 
         LEFT JOIN `products` ON `products`.`id` = `orders`.`product_id` 
-        LEFT JOIN `users` ON `users`.`user_id` = `orders`.`user_id`");
+        LEFT JOIN `users` ON `users`.`user_id` = `orders`.`user_id` 
+        ORDER BY `orders`.`created_at` DESC");
         $sql->execute();
         $items = array();
         $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
