@@ -26,17 +26,17 @@ $manufactures = $manufactureModel->getManufactures();
                                         <li class="<?php echo $link == "products" ? "active" : "" ?>"><a href="./products">Sản Phẩm</a></li>
                                         <li><a href="#">Hãng Sản Xuất<i class="ti-angle-down"></i><span class="new">New</span></a>
                                             <ul class="dropdown">
-                                                <?php foreach ($prototypes as $prototype) : ?>
-                                                    <li><a href="./products/categories/<?php echo $prototype["type_id"] ?>">
-                                                            <?php echo $prototype["type_name"] ?></a></li>
+                                                <?php foreach ($manufactures as $manufacture) : ?>
+                                                    <li><a href="./products/manufactures/<?php echo $manufacture["manu_id"] ?>">
+                                                            <?php echo $manufacture["manu_name"] ?></a></li>
                                                 <?php endforeach ?>
                                             </ul>
                                         </li>
                                         <li><a href="#">Loại Sản Phẩm<i class="ti-angle-down"></i><span class="new">New</span></a>
                                             <ul class="dropdown">
-                                                <?php foreach ($manufactures as $manufacture) : ?>
-                                                    <li><a href="./products/manufactures/<?php echo $manufacture["manu_id"] ?>">
-                                                            <?php echo $manufacture["manu_name"] ?></a></li>
+                                                <?php foreach ($prototypes as $prototype) : ?>
+                                                    <li><a href="./products/categories/<?php echo $prototype["type_id"] ?>">
+                                                            <?php echo $prototype["type_name"] ?></a></li>
                                                 <?php endforeach ?>
                                             </ul>
                                         </li>

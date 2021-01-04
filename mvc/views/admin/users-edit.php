@@ -6,7 +6,8 @@ $user = $usersModel->getUserWithUsername($_GET["username"]);
 if ($user == null) header("location: ../users");
 
 if (isset($_POST["pass"]) && isset($_POST["permission"])) {
-    $check = $usersModel->updateUserWithId($user->user_id, password_hash($_POST["pass"], PASSWORD_DEFAULT), $_POST["permission"]);
+    $password = strlen($_POST["pass"]) == 0 ? $user->password : password_hash($_POST["pass"], PASSWORD_DEFAULT);
+    $check = $usersModel->updateUserWithId($user->user_id, $password, $_POST["permission"]);
     if ($check) $message = "Sửa người dùng thành công!";
     else $message = "Sửa người dùng thất bại!";
     echo "<script type='text/javascript'>alert('$message');window.location = '../users'</script>";
@@ -48,7 +49,7 @@ if (isset($_POST["pass"]) && isset($_POST["permission"])) {
                                                 <option <?= $user->permission == "9" ? "selected" : ""  ?> value="9">Admin</option>
                                             </select>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Tạo Mới</button>
+                                        <button type="submit" class="btn btn-primary">Sửa</button>
                                     </form>
                                 </div>
                             </div>

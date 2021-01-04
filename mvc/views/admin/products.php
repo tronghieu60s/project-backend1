@@ -12,7 +12,7 @@ if (isset($_GET['remove'])) {
         else $message = "Xóa sản phẩm thất bại!";
     } else $message = "Bạn không thể xóa, có " . count($orders) . " đơn hàng của sản phẩm này.";
     echo "<script>alert('$message');</script>";
-    ("Refresh:0; url=admin");
+    header("Refresh:0; url=admin");
 }
 ?>
 

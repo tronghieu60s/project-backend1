@@ -26,7 +26,7 @@ if (isset($_GET['q'])) $search = $_GET['q'];
                     <!-- Search Form -->
                     <div class="search-top">
                         <form class="search-form" action="./products">
-                            <input type="text" placeholder="Search here..." name="q" value="<?php echo $search ?>">
+                            <input required type="text" placeholder="Search here..." name="q" value="<?php echo $search ?>">
                             <button value="search" type="submit"><i class="ti-search"></i></button>
                         </form>
                     </div>
@@ -39,7 +39,7 @@ if (isset($_GET['q'])) $search = $_GET['q'];
                 <div class="search-bar-top">
                     <div class="search-bar">
                         <form style="width: 100%; text-align: left;" action="./products">
-                            <input style="width: 100%; padding-right: 78px;" name="q" placeholder="Tìm kiếm sản phẩm ở đây....." type="search" value="<?php echo $search ?>">
+                            <input required style="width: 100%; padding-right: 78px;" name="q" placeholder="Tìm kiếm sản phẩm ở đây....." type="search" value="<?php echo $search ?>">
                             <button class="btnn"><i class="ti-search"></i></button>
                         </form>
                     </div>
@@ -83,7 +83,7 @@ if (isset($_GET['q'])) $search = $_GET['q'];
                                     <span>Total</span>
                                     <span class="total-amount"><?php echo number_format($totalMoney) . " VNĐ" ?></span>
                                 </div>
-                                <a href="checkout.html" class="btn animate">Checkout</a>
+                                <a href="./cart" class="btn animate">Đặt Hàng</a>
                             </div>
                         </div>
                         <!--/ End Shopping Item -->
