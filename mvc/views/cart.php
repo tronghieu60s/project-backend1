@@ -1,6 +1,5 @@
 <?php
 $productModel = $this->model("ProductModel");
-$totalMoney = 0;
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     if (!isset($_SESSION['products'][$id]))
@@ -82,13 +81,14 @@ require_once "./client/Base/Head.php";
                         </thead>
                         <tbody>
                             <?php
+                            $totalMoney = 0;
                             if (isset($_SESSION['products'])) :
                                 foreach ($_SESSION['products'] as $key => $qty) :
                                     $product = $productModel->getProductsWithId($key);
                                     $totalMoney += $qty * $product->price;
                             ?>
                                     <tr>
-                                        <td class="image" data-title="No"><img src="./public/images/products/<?php echo $product->pro_image ?>" alt="#"></td>
+                                        <td style="width: 120px;" class="image" data-title="No"><img src="./public/images/products/<?php echo $product->pro_image ?>" alt="#"></td>
                                         <td class="product-des" data-title="Description">
                                             <p class="product-name"><a href="./products/details/<?php echo $product->id ?>">
                                                     <?php echo $product->name ?>

@@ -34,7 +34,7 @@ if ($statusUpload) {
     else $message = "Upload thất bại!";
     echo "<script type='text/javascript'>
         alert('$message');
-        window.location.href='../admin/setting';
+        window.location.href='../admin/setting?eraseCache=true';
         </script>";
 }
 
