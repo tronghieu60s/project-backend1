@@ -4,6 +4,7 @@ $userModel = $this->model("UserModel");
 $user = $userModel->getUserWithUsername($_SESSION["user"]);
 $products = $orderModel->getProductsWithUserOrderStatus($user->user_id, 0);
 $productDelivered = $orderModel->getProductsWithUserOrderStatus($user->user_id, 1);
+
 ?>
 
 <?php
@@ -90,7 +91,7 @@ require_once "./client/Base/Head.php";
                         </thead>
                         <tbody>
                             <?php
-                            if ($products != null) :
+                            if ($productDelivered != null) :
                                 foreach ($productDelivered as $product) :
                             ?>
                                     <tr>
