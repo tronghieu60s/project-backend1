@@ -46,7 +46,7 @@ require_once "./client/Base/Head.php";
                                 foreach ($products as $product) :
                             ?>
                                     <tr>
-                                        <td class="image" data-title="No"><img src="./public/images/products/<?php echo $product["pro_image"] ?>" alt="#"></td>
+                                        <td style="width: 120px;" class="image" data-title="No"><img src="./public/images/products/<?php echo $product["pro_image"] ?>" alt="#"></td>
                                         <td class="product-des" data-title="Description">
                                             <p class="product-name"><a href="./products/details/<?php echo $product["id"] ?>">
                                                     <?php echo $product["name"] ?>
@@ -95,7 +95,7 @@ require_once "./client/Base/Head.php";
                                 foreach ($productDelivered as $product) :
                             ?>
                                     <tr>
-                                        <td class="image" data-title="No"><img src="./public/images/products/<?php echo $product["pro_image"] ?>" alt="#"></td>
+                                        <td style="width: 120px;" class="image" data-title="No"><img src="./public/images/products/<?php echo $product["pro_image"] ?>" alt="#"></td>
                                         <td class="product-des" data-title="Description">
                                             <p class="product-name"><a href="./products/details/<?php echo $product["id"] ?>">
                                                     <?php echo $product["name"] ?>
