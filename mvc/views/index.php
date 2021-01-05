@@ -33,6 +33,40 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-title">
+                        <h2>Mới Nhất</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="product-info">
+                        <div class="tab-content" id="myTabContent">
+                            <!-- Start Single Tab -->
+                            <div class="tab-pane fade show active">
+                                <div class="tab-single">
+                                    <div class="row">
+                                        <?php foreach (array_slice($data["products"], 0, 8) as $product) : ?>
+                                            <div class="col-xl-3 col-lg-4 col-md-4 col-6">
+                                                <?php include "./client/Products/ProductItem.php"
+                                                ?>
+                                            </div>
+                                        <?php endforeach ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/ End Single Tab -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-area section pb-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title">
                         <h2>Thịnh Hành</h2>
                     </div>
                 </div>
@@ -91,10 +125,6 @@
             </div>
         </div>
     </div>
-
-    <?php
-    //include_once "./client/Home/MidiumBanner.php";
-    ?>
 
     <div class="product-area most-popular section pb-0">
         <div class="container">
@@ -188,12 +218,6 @@
         </div>
     </div>
 
-    <?php
-    //include "./client/Home/SingleListSection.php" 
-    //include "./client/Home/CountDown.php"
-    //include "./client/Home/Blog.php" 
-    ?>
-
     <section class="shop-services section home mt-5">
         <div class="container">
             <div class="row">
@@ -236,9 +260,6 @@
             </div>
         </div>
     </section>
-
-    <?php //include "./client/Home/Newsletter.php" 
-    ?>
 
     <?php require_once "./client/Base/Footer.php" ?>
 </body>

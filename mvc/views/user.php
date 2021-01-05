@@ -1,10 +1,11 @@
 <?php
+if(!isset($_SESSION["user"])) header("location: ./auth/login");
+
 $orderModel = $this->model("OrderModel");
 $userModel = $this->model("UserModel");
 $user = $userModel->getUserWithUsername($_SESSION["user"]);
 $products = $orderModel->getProductsWithUserOrderStatus($user->user_id, 0);
 $productDelivered = $orderModel->getProductsWithUserOrderStatus($user->user_id, 1);
-
 ?>
 
 <?php
